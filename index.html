@@ -1446,7 +1446,7 @@
         const mIcon = document.getElementById('modal-icon');
 
         mTitle.innerText = title;
-        mMessage.innerText = message;
+        mMessage.innerHTML = message;
 
         mIcon.className = `w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl ${iconClassAndBg}`;
 
@@ -1456,8 +1456,8 @@
           mIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
         } else if (iconClassAndBg.includes('heart')) {
           mIcon.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-        } else if (iconClassAndBg.includes('bell')) {
-          mIcon.innerHTML = `<i class="fa-solid fa-bell"></i>`;
+        } else if (iconClassAndBg.includes('bullhorn')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-bullhorn"></i>`;
         } else if (iconClassAndBg.includes('arrow-rotate-left')) {
           mIcon.innerHTML = `<i class="fa-solid fa-arrow-rotate-left"></i>`;
         } else {
@@ -1472,10 +1472,10 @@
       }
 
       function openNotification() {
-        showModal(
-          '학식 운영 시간 안내',
-          '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.\n\n- 법학관 :  10:30~18:30\n- 복지관 : 조/중식 8:00 ~ 15:00 <br> 석식 17:00 ~ 18:30 ,
-          'fa-solid fa-bell text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]',
+      showModal(
+    '📢 학식 운영 시간 안내',
+    '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.<br><br>⚖️ 법학관 : 10:30 ~ 18:30<br>🏢 복지관 : 조/중식 08:00 ~ 15:00<br>🌙 석식 17:00 ~ 18:30',
+    'fa-solid fa-bullhorn text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]',
         );
       }
 
