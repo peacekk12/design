@@ -1,0 +1,1491 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>국민학식 K-Bob - 국민대학교 학식 스마트 주문 서비스</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: #f3f4f6;
+        -webkit-tap-highlight-color: transparent;
+      }
+      /* 모바일 프레임 스타일링 (데스크톱 뷰 대응) */
+      .mobile-container {
+        max-width: 430px;
+        min-height: 100vh;
+        margin: 0 auto;
+        background-color: #fcf8f4; /* 메인 배경색: 연한 베이지 아이보리 */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      /* 스크롤바 숨기기 */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      /* QR 코드 흔들림/스캔 가이드 애니메이션 */
+      @keyframes scan {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(180px);
+        }
+      }
+      .scanner-line {
+        animation: scan 3s infinite ease-in-out;
+      }
+      /* 탭 액티브 효과 - 강조 컬러 #f0e1b1 계열 중 가독성을 위해 톤다운된 골드색상 적용 */
+      .tab-active {
+        color: #d9b455;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body class="flex justify-center items-center min-h-screen">
+    <!-- 모바일 컨테이너 시작 -->
+    <div
+      class="mobile-container w-full overflow-x-hidden flex flex-col justify-between"
+    >
+      <!-- ================= TOP HEADER ================= -->
+      <header
+        class="bg-[#FFFDFC] border-b border-[#F3E7DA] sticky top-0 z-40 px-4 py-3 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-lg bg-[#f0e1b1] flex items-center justify-center text-gray-800 font-black text-lg shadow-sm border border-[#F3E7DA]"
+          >
+            K
+          </div>
+          <div>
+            <h1 class="text-base font-bold text-gray-850 leading-tight">
+              국민학식
+              <span class="text-[#d9b455] text-xs font-semibold">K-Bob</span>
+            </h1>
+            <p class="text-[10px] text-gray-500 flex items-center gap-1">
+              <i class="fa-solid fa-location-dot text-[#d9b455]"></i> 국민대학교
+              학생식당
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="changeTab('tickets')" class="relative p-1">
+            <i
+              class="fa-solid fa-ticket text-xl text-gray-600 hover:text-[#d9b455] transition"
+            ></i>
+            <span
+              id="ticket-badge"
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden"
+              >0</span
+            >
+          </button>
+          <button
+            onclick="openNotification()"
+            class="p-1 text-gray-600 hover:text-[#d9b455] transition"
+          >
+            <i class="fa-regular fa-bell text-xl"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- ================= MAIN CONTENT CONTAINER ================= -->
+      <main class="flex-1 overflow-y-auto no-scrollbar pb-20">
+        <!-- 1. HOME SCREEN -->
+        <section id="screen-home" class="screen-view p-4 space-y-5">
+          <!-- 국민대 식당 바로가기 Quick Links (법학관, 복지관 식당 부활) -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <button
+              id="home-btn-법학관"
+              onclick="selectCafeteria('법학관')"
+              class="cafeteria-btn bg-[#FFFDFC] border-2 border-[#f0e1b1] p-4 rounded-xl text-center transition shadow-sm"
+            >
+              <span class="block text-2xl mb-1">⚖️</span>
+              <span class="text-xs font-bold text-gray-800">법학관 식당</span>
+              <span
+                class="text-[9px] text-emerald-600 font-semibold block mt-1 bg-emerald-50 py-0.5 rounded-full"
+                >여유 (12명)</span
+              >
+            </button>
+            <button
+              id="home-btn-복지관"
+              onclick="selectCafeteria('복지관')"
+              class="cafeteria-btn bg-[#FFFDFC] border border-[#F3E7DA] p-4 rounded-xl text-center transition shadow-sm"
+            >
+              <span class="block text-2xl mb-1">🏢</span>
+              <span class="text-xs font-bold text-gray-800">복지관 식당</span>
+              <span
+                class="text-[9px] text-amber-600 font-semibold block mt-1 bg-amber-50 py-0.5 rounded-full"
+                >보통 (24명)</span
+              >
+            </button>
+          </div>
+
+          <!-- 실시간 대기 대시보드 (진하지 않고 부드러운 소프트 크림-골드 라이트 그라데이션 적용) -->
+          <div
+            class="bg-gradient-to-br from-[#FFFDFC] to-[#f0e1b1]/35 text-gray-800 rounded-2xl p-5 shadow-sm border border-[#F3E7DA]"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span
+                  class="bg-[#f0e1b1] text-[9px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded text-gray-700 border border-[#F3E7DA]/40"
+                  >LIVE 대기 현황</span
+                >
+                <h3
+                  class="text-lg font-bold mt-1.5 text-gray-850"
+                  id="dashboard-cafeteria-title"
+                >
+                  법학관 학생식당
+                </h3>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-gray-500">현재 대기</span>
+                <p class="text-xl font-black text-gray-900" id="wait-count">
+                  12명
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="grid grid-cols-2 gap-2 pt-3 border-t border-[#F3E7DA] text-center"
+            >
+              <div>
+                <span class="text-[10px] text-gray-500 block"
+                  >평균 조리/대기</span
+                >
+                <span class="text-xs font-bold text-gray-800" id="wait-time"
+                  >약 5분 ~ 8분</span
+                >
+              </div>
+              <div class="border-l border-[#F3E7DA]">
+                <span class="text-[10px] text-gray-500 block"
+                  >모바일 즉시수령</span
+                >
+                <span class="text-xs font-bold text-emerald-600"
+                  ><i class="fa-solid fa-bolt"></i> 바로주문 가능</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 실시간 한정 수량 알림 배너 -->
+          <div
+            class="bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl p-3 flex items-center justify-between shadow-sm"
+          >
+            <div class="flex items-center gap-2.5">
+              <div
+                class="bg-[#FCF8F4] text-[#d9b455] w-8 h-8 rounded-full flex items-center justify-center text-sm border border-[#F3E7DA]"
+              >
+                <i class="fa-solid fa-fire-flame-curved"></i>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-gray-850">
+                  인기 학식 곧 마감!
+                </h4>
+                <p class="text-[10px] text-gray-500">
+                  법학관 [치즈제육덮밥] 잔여 3개 남음
+                </p>
+              </div>
+            </div>
+            <button
+              onclick="viewProductDetail(1)"
+              class="bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[11px] font-bold px-3 py-1.5 rounded-lg transition shadow-sm border border-[#F3E7DA]"
+            >
+              선점하기
+            </button>
+          </div>
+
+          <!-- 실시간 인기 학식 랭킹 (메뉴 이미지 포함) -->
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3
+                class="text-sm font-bold text-gray-850 flex items-center gap-1.5"
+              >
+                <span class="text-lg">🔥</span> 실시간 인기 메뉴 랭킹
+              </h3>
+              <button
+                onclick="changeTab('menu')"
+                class="text-[11px] text-[#d9b455] font-semibold"
+              >
+                전체보기 <i class="fa-solid fa-chevron-right text-[9px]"></i>
+              </button>
+            </div>
+
+            <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+              <!-- 인기 카드 1 -->
+              <div
+                onclick="viewProductDetail(1)"
+                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+              >
+                <div class="relative h-28 bg-gray-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1580959375944-abd7e990f6c4?q=80&w=300&auto=format&fit=crop"
+                    alt="제육덮밥"
+                    class="w-full h-full object-cover"
+                  />
+                  <span
+                    class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
+                    >곧 마감</span
+                  >
+                  <span
+                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                    >1위</span
+                  >
+                </div>
+                <div class="p-2.5">
+                  <span class="text-[9px] text-[#d9b455] font-medium"
+                    >법학관 식당</span
+                  >
+                  <h4 class="text-xs font-bold text-gray-800 truncate">
+                    치즈 제육덮밥
+                  </h4>
+                  <div class="flex justify-between items-center mt-2">
+                    <span class="text-xs font-extrabold text-gray-900"
+                      >5,500원</span
+                    >
+                    <span
+                      class="text-[9px] text-red-600 font-bold bg-red-50 px-1.5 py-0.5 rounded"
+                      >3개 남음</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- 인기 카드 2 -->
+              <div
+                onclick="viewProductDetail(2)"
+                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+              >
+                <div class="relative h-28 bg-gray-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=300&auto=format&fit=crop"
+                    alt="라멘"
+                    class="w-full h-full object-cover"
+                  />
+                  <span
+                    class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
+                    >주문가능</span
+                  >
+                  <span
+                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                    >2위</span
+                  >
+                </div>
+                <div class="p-2.5">
+                  <span class="text-[9px] text-[#d9b455] font-medium"
+                    >복지관 식당</span
+                  >
+                  <h4 class="text-xs font-bold text-gray-800 truncate">
+                    돈코츠 소유라멘
+                  </h4>
+                  <div class="flex justify-between items-center mt-2">
+                    <span class="text-xs font-extrabold text-gray-900"
+                      >6,000원</span
+                    >
+                    <span
+                      class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded"
+                      >여유 25개</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- 인기 카드 3 -->
+              <div
+                onclick="viewProductDetail(4)"
+                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+              >
+                <div class="relative h-28 bg-gray-100">
+                  <img
+                    src="https://images.unsplash.com/photo-1608897013039-887f21d8c804?q=80&w=300&auto=format&fit=crop"
+                    alt="된장찌개"
+                    class="w-full h-full object-cover"
+                  />
+                  <span
+                    class="absolute top-2 left-2 bg-emerald-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
+                    >주문가능</span
+                  >
+                  <span
+                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                    >3위</span
+                  >
+                </div>
+                <div class="p-2.5">
+                  <span class="text-[9px] text-[#d9b455] font-medium"
+                    >법학관 식당</span
+                  >
+                  <h4 class="text-xs font-bold text-gray-800 truncate">
+                    차돌박이 된장찌개
+                  </h4>
+                  <div class="flex justify-between items-center mt-2">
+                    <span class="text-xs font-extrabold text-gray-900"
+                      >5,000원</span
+                    >
+                    <span
+                      class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded"
+                      >여유 12개</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. MENU LIST SCREEN -->
+        <section id="screen-menu" class="screen-view p-4 space-y-4 hidden">
+          <!-- 상단 필터/탭 (복지관, 법학관 식당 탭 부활) -->
+          <div class="flex bg-[#F3E7DA] p-1 rounded-xl">
+            <button
+              onclick="filterCafeteria('전체')"
+              class="menu-filter-btn flex-1 text-center py-2 text-xs font-bold rounded-lg bg-[#FFFDFC] text-gray-800 border border-[#F3E7DA] shadow-sm transition"
+            >
+              전체식당
+            </button>
+            <button
+              onclick="filterCafeteria('법학관')"
+              class="menu-filter-btn flex-1 text-center py-2 text-xs font-semibold rounded-lg text-gray-655 transition"
+            >
+              법학관
+            </button>
+            <button
+              onclick="filterCafeteria('복지관')"
+              class="menu-filter-btn flex-1 text-center py-2 text-xs font-semibold rounded-lg text-gray-655 transition"
+            >
+              복지관
+            </button>
+          </div>
+
+          <!-- 메뉴 검색 바 -->
+          <div class="relative">
+            <input
+              type="text"
+              id="menu-search-input"
+              onkeyup="searchMenu()"
+              placeholder="메뉴 이름이나 키워드를 검색하세요..."
+              class="w-full text-xs pl-9 pr-4 py-3 bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]"
+            />
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"
+            ></i>
+          </div>
+
+          <!-- 메뉴 리스트 헤더 -->
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-gray-500 font-medium" id="menu-count-text"
+              >총 4개 학식 판매 중</span
+            >
+            <button
+              onclick="toggleSoldOutFilter()"
+              id="soldout-filter-btn"
+              class="text-xs text-gray-655 border border-[#F3E7DA] px-2.5 py-1.5 rounded-lg bg-[#FFFDFC] flex items-center gap-1 hover:border-[#f0e1b1] transition"
+            >
+              <i class="fa-regular fa-square" id="soldout-checkbox"></i> 품절
+              제외
+            </button>
+          </div>
+
+          <!-- 메뉴 리스트 바디 -->
+          <div id="menu-items-container" class="space-y-3">
+            <!-- JavaScript로 동적 렌더링 -->
+          </div>
+        </section>
+
+        <!-- 3. MENU DETAIL SCREEN -->
+        <section id="screen-detail" class="screen-view hidden">
+          <!-- 상세 화면 백버튼 -->
+          <div
+            class="px-4 py-3 bg-[#FFFDFC] border-b border-[#F3E7DA] flex items-center gap-3"
+          >
+            <button
+              onclick="goBackToMenu()"
+              class="p-1 text-gray-655 text-lg hover:text-[#d9b455]"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="text-sm font-bold text-gray-805">학식 상세 정보</span>
+          </div>
+
+          <div id="detail-content" class="p-4 space-y-4">
+            <!-- JavaScript로 상세 내용 렌더링 -->
+          </div>
+        </section>
+
+        <!-- 4. PAYMENT SCREEN -->
+        <section id="screen-payment" class="screen-view hidden">
+          <div
+            class="px-4 py-3 bg-[#FFFDFC] border-b border-[#F3E7DA] flex items-center gap-3"
+          >
+            <button
+              onclick="changeTab('menu')"
+              class="p-1 text-gray-655 text-lg hover:text-[#d9b455]"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="text-sm font-bold text-gray-850">결제하기</span>
+          </div>
+
+          <div class="p-4 space-y-4" id="payment-content">
+            <!-- 결제 대상 메뉴 요약 -->
+            <div
+              class="bg-[#FFFDFC] p-4 rounded-xl border border-[#F3E7DA] shadow-sm"
+            >
+              <h4
+                class="text-[10px] text-gray-400 font-bold uppercase tracking-wider"
+              >
+                주문 식당
+              </h4>
+              <p
+                class="text-sm font-bold text-gray-850 mt-0.5"
+                id="pay-cafeteria"
+              >
+                법학관 학생식당
+              </p>
+
+              <div
+                class="flex items-center gap-3 mt-3 pt-3 border-t border-[#F3E7DA]"
+              >
+                <img
+                  id="pay-image"
+                  class="w-12 h-12 rounded-lg object-cover bg-gray-100"
+                />
+                <div class="flex-1">
+                  <h3
+                    class="text-sm font-bold text-gray-850"
+                    id="pay-menu-name"
+                  >
+                    메뉴 이름
+                  </h3>
+                  <p class="text-xs text-gray-500 mt-0.5" id="pay-price">
+                    5,500원
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 실시간 알림 가이드 -->
+            <div
+              class="bg-[#FCF8F4] text-gray-750 p-3.5 rounded-xl border border-[#F3E7DA] text-[11px] flex items-start gap-2.5"
+            >
+              <i class="fa-solid fa-circle-info mt-0.5 text-[#d9b455]"></i>
+              <div>
+                <p class="font-bold text-gray-855">
+                  실시간 자동 조리 배정 서비스
+                </p>
+                <p class="mt-0.5 leading-relaxed text-gray-500">
+                  결제 즉시 주방에 주문이 자동 전달되며, 실시간 QR코드 대기
+                  순번이 생성됩니다. 10분 내 미픽업 시 폐기되며, 조리 전 환불은
+                  원클릭으로 보장됩니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- 결제 수단 선택 -->
+            <div class="space-y-2.5">
+              <h3 class="text-xs font-bold text-gray-855">결제 수단</h3>
+
+              <div class="space-y-2">
+                <label
+                  class="flex items-center justify-between p-3.5 border-2 border-[#f0e1b1] bg-[#FFFDFC] rounded-xl cursor-pointer shadow-sm"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <div
+                      class="w-5 h-5 rounded-full bg-[#f0e1b1] text-gray-800 flex items-center justify-center text-[10px] font-bold border border-[#F3E7DA]"
+                    >
+                      K
+                    </div>
+                    <span class="text-xs font-bold text-gray-850"
+                      >국민대 K-Pay
+                      <span class="text-[10px] text-gray-500 font-normal"
+                        >(학번 계좌 등록 완료)</span
+                      ></span
+                    >
+                  </div>
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    checked
+                    class="text-gray-400"
+                  />
+                </label>
+
+                <label
+                  class="flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-xs font-bold text-yellow-600"
+                      >카카오페이</span
+                    >
+                  </div>
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    class="text-gray-400"
+                  />
+                </label>
+
+                <label
+                  class="flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-xs font-bold text-blue-600"
+                      >토스페이</span
+                    >
+                  </div>
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    class="text-gray-400"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <!-- 최종 금액 확인 -->
+            <div
+              class="p-3.5 bg-[#FFFDFC] rounded-xl border border-[#F3E7DA] space-y-2"
+            >
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>메뉴 금액</span>
+                <span id="pay-sum">5,500원</span>
+              </div>
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>K-Pay 동문 할인 (5%)</span>
+                <span class="text-red-500" id="pay-discount">-0원</span>
+              </div>
+              <div
+                class="flex justify-between text-sm font-bold text-gray-850 pt-2 border-t border-[#F3E7DA]"
+              >
+                <span>최종 결제 금액</span>
+                <span class="text-gray-800" id="pay-total">5,500원</span>
+              </div>
+            </div>
+
+            <!-- 약관 동의 -->
+            <p class="text-[10px] text-gray-400 text-center">
+              위 주문 정보 및 실시간 마감 시간 전 픽업 규정을 확인하였으며 결제
+              처리에 동의합니다.
+            </p>
+
+            <!-- 최종 결제 버튼 -->
+            <button
+              onclick="processPayment()"
+              class="w-full bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 py-3.5 rounded-xl font-bold text-sm shadow-md border border-[#F3E7DA] transition"
+            >
+              <span id="total-button-price">5,500원</span> 결제 및 QR식권 발급
+            </button>
+          </div>
+        </section>
+
+        <!-- 5. TICKET WALLET SCREEN (QR 식권) -->
+        <section id="screen-tickets" class="screen-view p-4 space-y-4 hidden">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-bold text-gray-850">내 보관함</h3>
+            <span
+              class="bg-[#F3E7DA] text-gray-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-[#f0e1b1]/50"
+              id="ticket-count-pill"
+              >보유 식권 0장</span
+            >
+          </div>
+
+          <!-- 식권 리스트 컨테이너 -->
+          <div id="tickets-container" class="space-y-4">
+            <!-- 식권이 없을 때의 UI -->
+            <div
+              id="no-tickets"
+              class="text-center py-16 space-y-3 bg-[#FFFDFC] rounded-2xl border-2 border-dashed border-[#F3E7DA]"
+            >
+              <div
+                class="w-14 h-14 bg-[#FCF8F4] rounded-full flex items-center justify-center mx-auto text-gray-450 text-xl border border-[#F3E7DA]"
+              >
+                <i class="fa-solid fa-ticket text-[#d9b455]"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-gray-800">
+                  활성화된 식권이 없습니다.
+                </p>
+                <p class="text-[10px] text-gray-400 mt-1">
+                  학식 메뉴를 즉시 확인하고 주문해보세요!
+                </p>
+              </div>
+              <button
+                onclick="changeTab('menu')"
+                class="bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[11px] font-bold px-4 py-2 rounded-lg inline-block shadow-sm border border-[#F3E7DA]"
+              >
+                학식 메뉴 보러가기
+              </button>
+            </div>
+
+            <!-- 동적 생성되는 식권 영역 -->
+          </div>
+        </section>
+      </main>
+
+      <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+      <nav
+        class="bg-[#FFFDFC] border-t border-[#F3E7DA] absolute bottom-0 left-0 right-0 z-40 px-4 py-2 flex justify-between items-center shadow-[0_-2px_10px_rgba(0,0,0,0.02)]"
+      >
+        <button
+          onclick="changeTab('home')"
+          class="nav-btn flex flex-col items-center gap-1 py-1 flex-1 tab-active"
+        >
+          <i class="fa-solid fa-house text-lg"></i>
+          <span class="text-[9px] font-medium">홈</span>
+        </button>
+        <button
+          onclick="changeTab('menu')"
+          class="nav-btn flex flex-col items-center gap-1 py-1 flex-1 text-gray-400"
+        >
+          <i class="fa-solid fa-utensils text-lg"></i>
+          <span class="text-[9px] font-medium">식당/메뉴</span>
+        </button>
+        <button
+          onclick="changeTab('tickets')"
+          class="nav-btn flex flex-col items-center gap-1 py-1 flex-1 text-gray-400 relative"
+        >
+          <i class="fa-solid fa-qrcode text-lg"></i>
+          <span class="text-[9px] font-medium">QR 식권</span>
+          <span
+            id="nav-ticket-badge"
+            class="absolute top-0 right-5 bg-red-500 text-white text-[8px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center hidden"
+            >0</span
+          >
+        </button>
+      </nav>
+
+      <!-- ================= MODAL WINDOW (가상 안내 및 알림) ================= -->
+      <div
+        id="app-modal"
+        class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden"
+      >
+        <div
+          class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA] transform scale-95 transition-all"
+        >
+          <div class="p-5 text-center space-y-3">
+            <div
+              id="modal-icon"
+              class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl"
+            >
+              <!-- 동적 아이콘 -->
+            </div>
+            <h3 id="modal-title" class="text-sm font-bold text-gray-900">
+              안내
+            </h3>
+            <p id="modal-message" class="text-xs text-gray-500 leading-relaxed">
+              알림 메시지 본문입니다.
+            </p>
+          </div>
+          <div
+            class="bg-[#FCF8F4] border-t border-[#F3E7DA] px-4 py-3 flex gap-2"
+          >
+            <button
+              onclick="closeModal()"
+              class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 모바일 컨테이너 끝 -->
+
+    <script>
+      // ================= APPLICATION DATA =================
+      const K_CAFE_DATA = {
+        법학관: {
+          name: '법학관 학생식당',
+          waitCount: 12,
+          waitTime: '약 5분 ~ 8분',
+        },
+        복지관: {
+          name: '복지관 학생식당',
+          waitCount: 24,
+          waitTime: '약 8분 ~ 12분',
+        },
+      };
+
+      const MENU_DATA = [
+        {
+          id: 1,
+          name: '치즈 제육덮밥 (법학관 시그니처)',
+          cafeteria: '법학관',
+          price: 5500,
+          rating: 4.8,
+          reviewsCount: 142,
+          image:
+            'https://images.unsplash.com/photo-1580959375944-abd7e990f6c4?q=80&w=300&auto=format&fit=crop',
+          stock: 3, // 마감 임박
+          maxStock: 80,
+          tags: ['강력추천', '고기류', '가성비'],
+          description:
+            '국민대학교 법학관 부동의 인기 1위 메뉴! 매콤달콤하게 볶아낸 제육 위에 모짜렐라 치즈가 듬뿍 올라가 고소함을 더했습니다.',
+          nutrients: { kcal: '785 kcal', protein: '34g', sodium: '850mg' },
+        },
+        {
+          id: 2,
+          name: '돈코츠 소유라멘 (차슈 추가)',
+          cafeteria: '복지관',
+          price: 6000,
+          rating: 4.5,
+          reviewsCount: 89,
+          image:
+            'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=300&auto=format&fit=crop',
+          stock: 25, // 여유
+          maxStock: 100,
+          tags: ['해장용', '면류', '일식'],
+          description:
+            '진한 돈골 육수에 감칠맛을 더하는 특제 소유(간장) 소스로 맛을 낸 고품격 정통 라멘입니다. 두툼한 차슈 2장 제공.',
+          nutrients: { kcal: '650 kcal', protein: '28g', sodium: '1,200mg' },
+        },
+        {
+          id: 4,
+          name: '차돌박이 된장찌개 & 가마솥밥',
+          cafeteria: '법학관',
+          price: 5000,
+          rating: 4.7,
+          reviewsCount: 65,
+          image:
+            'https://images.unsplash.com/photo-1608897013039-887f21d8c804?q=80&w=300&auto=format&fit=crop',
+          stock: 12, // 남음
+          maxStock: 60,
+          tags: ['한식', '가성비', '든든한'],
+          description:
+            '부드러운 차돌박이를 구수하고 진한 재래식 된장찌개에 끓여내었습니다. 법학관 전용 누룽지 가마솥밥이 함께 제공됩니다.',
+          nutrients: { kcal: '580 kcal', protein: '22g', sodium: '710mg' },
+        },
+        {
+          id: 5,
+          name: '마라탕 (야채 가득 커스텀 기본형)',
+          cafeteria: '복지관',
+          price: 6500,
+          rating: 4.9,
+          reviewsCount: 320,
+          image:
+            'https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=300&auto=format&fit=crop',
+          stock: 8, // 곧마감
+          maxStock: 150,
+          tags: ['매콤', '핫트렌드', '중식'],
+          description:
+            '유행하는 마라 육수에 당면, 푸주, 청경채, 소고기 등 학생들이 선호하는 푸짐한 사리들을 직접 엄선하여 가득 채운 칼칼한 한 그릇입니다.',
+          nutrients: { kcal: '720 kcal', protein: '18g', sodium: '1,450mg' },
+        },
+      ];
+
+      // 가상 유저 구매 보관 식권 리스트
+      let USER_TICKETS = [];
+      let SELECTED_CAFETERIA = '법학관';
+      let ACTIVE_FILTER = '전체';
+      let EXCLUDE_SOLDOUT = false;
+
+      // ================= APP INITS =================
+      window.onload = function () {
+        renderMenuList();
+        updateWidgets();
+      };
+
+      // ================= TAB NAVIGATION =================
+      function changeTab(tabId) {
+        // 모든 스크린 숨기기
+        document
+          .querySelectorAll('.screen-view')
+          .forEach((s) => s.classList.add('hidden'));
+
+        // 모든 탭 스타일 초기화
+        document.querySelectorAll('.nav-btn').forEach((btn) => {
+          btn.classList.remove('tab-active');
+          btn.classList.add('text-gray-400');
+        });
+
+        // 지정 스크린 활성화
+        const activeScreen = document.getElementById(`screen-${tabId}`);
+        if (activeScreen) {
+          activeScreen.classList.remove('hidden');
+        }
+
+        // 네비게이션 버튼 활성화 디자인 (강조색: #f0e1b1 대비 가시성 어두운 골드)
+        let btnIndex = 0;
+        if (tabId === 'home') btnIndex = 0;
+        else if (tabId === 'menu' || tabId === 'detail' || tabId === 'payment')
+          btnIndex = 1;
+        else if (tabId === 'tickets') btnIndex = 2;
+
+        const targetBtn = document.querySelectorAll('.nav-btn')[btnIndex];
+        if (targetBtn) {
+          targetBtn.classList.add('tab-active');
+          targetBtn.classList.remove('text-gray-400');
+        }
+
+        // 만약 탭이 이동하면 필요한 데이터 갱신
+        if (tabId === 'menu') {
+          renderMenuList();
+        } else if (tabId === 'tickets') {
+          renderTickets();
+        }
+      }
+
+      // ================= HOME ACTIONS =================
+      function selectCafeteria(name) {
+        SELECTED_CAFETERIA = name;
+
+        // 버튼 상태 변경 (#f0e1b1를 강조 테두리로 사용, 미선택은 #F3E7DA)
+        document.querySelectorAll('.cafeteria-btn').forEach((btn) => {
+          btn.classList.remove('border-[#f0e1b1]', 'border-2');
+          btn.classList.add('border-[#F3E7DA]', 'border');
+        });
+
+        const activeBtn = document.getElementById(`home-btn-${name}`);
+        if (activeBtn) {
+          activeBtn.classList.remove('border-[#F3E7DA]', 'border');
+          activeBtn.classList.add('border-[#f0e1b1]', 'border-2');
+        }
+
+        // 대시보드 갱신
+        document.getElementById('dashboard-cafeteria-title').innerText =
+          K_CAFE_DATA[name].name;
+        document.getElementById('wait-count').innerText =
+          K_CAFE_DATA[name].waitCount + '명';
+        document.getElementById('wait-time').innerText =
+          K_CAFE_DATA[name].waitTime;
+      }
+
+      // ================= MENU ACTIONS & RENDER =================
+      function renderMenuList() {
+        const container = document.getElementById('menu-items-container');
+        container.innerHTML = '';
+
+        let filteredList = MENU_DATA;
+
+        // 1. 식당 필터링
+        if (ACTIVE_FILTER !== '전체') {
+          filteredList = filteredList.filter(
+            (item) => item.cafeteria === ACTIVE_FILTER,
+          );
+        }
+
+        // 2. 검색 필터링
+        const searchQuery = document
+          .getElementById('menu-search-input')
+          .value.toLowerCase()
+          .trim();
+        if (searchQuery) {
+          filteredList = filteredList.filter(
+            (item) =>
+              item.name.toLowerCase().includes(searchQuery) ||
+              item.tags.some((tag) => tag.toLowerCase().includes(searchQuery)),
+          );
+        }
+
+        // 3. 품절 여부 필터링
+        if (EXCLUDE_SOLDOUT) {
+          filteredList = filteredList.filter((item) => item.stock > 0);
+        }
+
+        // 메뉴 건수 표시
+        document.getElementById('menu-count-text').innerText =
+          `총 ${filteredList.length}개 학식 판매 중`;
+
+        if (filteredList.length === 0) {
+          container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 text-xs bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl">
+                        <i class="fa-solid fa-triangle-exclamation text-yellow-600 text-lg mb-2 block"></i>
+                        해당하는 메뉴가 없습니다.
+                    </div>
+                `;
+          return;
+        }
+
+        // 리스트 생성
+        filteredList.forEach((item) => {
+          let badgeHTML = '';
+          let opacityClass = '';
+          let btnHTML = '';
+
+          if (item.stock === 0) {
+            badgeHTML = `<span class="bg-gray-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">품절</span>`;
+            opacityClass = 'opacity-65';
+            btnHTML = `<button disabled class="w-full bg-gray-200 text-gray-400 text-xs font-bold py-2 rounded-lg cursor-not-allowed">판매 종료</button>`;
+          } else if (item.stock <= 5) {
+            badgeHTML = `<span class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded animate-pulse">곧 마감 (${item.stock}개)</span>`;
+            btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">즉시 사전주문</button>`;
+          } else {
+            badgeHTML = `<span class="bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">여유 (${item.stock}개)</span>`;
+            btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2 rounded-lg transition border border-[#F3E7DA] shadow-sm">사전주문</button>`;
+          }
+
+          const itemCard = document.createElement('div');
+          itemCard.className = `bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm flex flex-col ${opacityClass} transition hover:shadow-md`;
+          itemCard.innerHTML = `
+                    <div class="flex p-3 gap-3">
+                        <div class="relative w-24 h-24 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 cursor-pointer" onclick="viewProductDetail(${item.id})">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                            <span class="absolute top-1 left-1 bg-black/50 text-[8px] text-white px-1.5 py-0.5 rounded-full font-medium">${item.cafeteria}</span>
+                        </div>
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div class="cursor-pointer" onclick="viewProductDetail(${item.id})">
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    ${badgeHTML}
+                                    <span class="text-[10px] text-yellow-500 font-bold"><i class="fa-solid fa-star"></i> ${item.rating}</span>
+                                </div>
+                                <h3 class="text-xs font-bold text-gray-850 truncate mt-1">${item.name}</h3>
+                                <p class="text-[10px] text-gray-500 line-clamp-2 mt-0.5 leading-tight">${item.description}</p>
+                            </div>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-xs font-black text-gray-850">${item.price.toLocaleString()}원</span>
+                                <div class="w-24">
+                                    ${btnHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+          container.appendChild(itemCard);
+        });
+      }
+
+      function filterCafeteria(cafeteriaName) {
+        ACTIVE_FILTER = cafeteriaName;
+
+        // 필터 탭 UI 갱신 (전체, 법학관, 복지관 탭 세팅)
+        const buttons = document.querySelectorAll('.menu-filter-btn');
+        const targetIndex =
+          cafeteriaName === '전체' ? 0 : cafeteriaName === '법학관' ? 1 : 2;
+
+        buttons.forEach((btn, idx) => {
+          if (idx === targetIndex) {
+            btn.className =
+              'menu-filter-btn flex-1 text-center py-2 text-xs font-bold rounded-lg bg-[#FFFDFC] text-gray-800 border border-[#F3E7DA] shadow-sm transition';
+          } else {
+            btn.className =
+              'menu-filter-btn flex-1 text-center py-2 text-xs font-semibold rounded-lg text-gray-500 transition';
+          }
+        });
+
+        renderMenuList();
+      }
+
+      function searchMenu() {
+        renderMenuList();
+      }
+
+      function toggleSoldOutFilter() {
+        EXCLUDE_SOLDOUT = !EXCLUDE_SOLDOUT;
+        const checkbox = document.getElementById('soldout-checkbox');
+        const btn = document.getElementById('soldout-filter-btn');
+
+        if (EXCLUDE_SOLDOUT) {
+          checkbox.className = 'fa-solid fa-square-check text-[#d9b455]';
+          btn.classList.add(
+            'border-[#f0e1b1]',
+            'bg-[#FFFDFC]',
+            'text-gray-800',
+          );
+        } else {
+          checkbox.className = 'fa-regular fa-square';
+          btn.className =
+            'text-xs text-gray-655 border border-[#F3E7DA] px-2.5 py-1.5 rounded-lg bg-[#FFFDFC] flex items-center gap-1';
+        }
+        renderMenuList();
+      }
+
+      // ================= PRODUCT DETAIL SCREEN =================
+      function viewProductDetail(id) {
+        const item = MENU_DATA.find((p) => p.id === id);
+        if (!item) return;
+
+        const detailContainer = document.getElementById('detail-content');
+
+        let badgeHTML = '';
+        let actionBtnHTML = '';
+
+        if (item.stock === 0) {
+          badgeHTML = `<span class="bg-gray-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded">품절</span>`;
+          actionBtnHTML = `<button disabled class="flex-1 bg-gray-350 text-gray-500 py-3.5 rounded-xl text-xs font-bold cursor-not-allowed">오늘 판매 종료</button>`;
+        } else if (item.stock <= 5) {
+          badgeHTML = `<span class="bg-red-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded animate-pulse">곧 마감 (${item.stock}개 남음)</span>`;
+          actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-red-500 hover:bg-red-655 text-white py-3.5 rounded-xl text-xs font-bold shadow-md transition">마감 전 긴급 사전주문</button>`;
+        } else {
+          badgeHTML = `<span class="bg-emerald-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded">주문 가능 (${item.stock}개 남음)</span>`;
+          actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 py-3.5 rounded-xl text-xs font-bold border border-[#F3E7DA] shadow-md transition">사전주문 하기</button>`;
+        }
+
+        let tagsHTML = item.tags
+          .map(
+            (t) =>
+              `<span class="bg-[#F3E7DA] text-gray-750 text-[10px] px-2.5 py-1 rounded-md">#${t}</span>`,
+          )
+          .join(' ');
+
+        detailContainer.innerHTML = `
+                <!-- 이미지와 기본 타이틀 -->
+                <div class="relative h-56 rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-end p-4">
+                        <span class="bg-[#f0e1b1] text-gray-800 text-[9px] font-extrabold px-2 py-0.5 rounded w-max mb-1.5 shadow-sm border border-[#F3E7DA]">${item.cafeteria}</span>
+                        <h2 class="text-base font-bold text-white leading-tight">${item.name}</h2>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-lg font-black text-gray-800">${item.price.toLocaleString()}원</span>
+                        <span class="text-[10px] text-gray-400 block mt-0.5">외부 식권 발매기 대기 불필요, 즉시 픽업 가능</span>
+                    </div>
+                    <div>
+                        ${badgeHTML}
+                    </div>
+                </div>
+
+                <div class="flex gap-1.5 flex-wrap">
+                    ${tagsHTML}
+                </div>
+
+                <!-- 메뉴 개요 -->
+                <div class="bg-[#FFFDFC] p-3.5 rounded-xl border border-[#F3E7DA]">
+                    <h3 class="text-xs font-bold text-gray-850 mb-1">상세 구성 및 맛 설명</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">${item.description}</p>
+                </div>
+
+                <!-- 실시간 현황 요약 -->
+                <div class="grid grid-cols-2 gap-2 bg-[#FFFDFC] p-3.5 rounded-xl border border-[#F3E7DA] text-center text-xs">
+                    <div>
+                        <span class="text-gray-500 block text-[10px]">현재 픽업 대기인원</span>
+                        <span class="font-extrabold text-gray-800 mt-0.5 block">${K_CAFE_DATA[item.cafeteria].waitCount}명</span>
+                    </div>
+                    <div class="border-l border-[#F3E7DA]">
+                        <span class="text-gray-500 block text-[10px]">예상 수령 소요시간</span>
+                        <span class="font-extrabold text-gray-800 mt-0.5 block">${K_CAFE_DATA[item.cafeteria].waitTime}</span>
+                    </div>
+                </div>
+
+                <!-- 영양 정보 접이식 스타일 -->
+                <div class="border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl p-3.5">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-calculator text-gray-655"></i> 영양 성분 정보</span>
+                        <span class="text-[9px] text-gray-850 font-bold bg-[#FCF8F4] border border-[#F3E7DA] px-1.5 py-0.5 rounded">헬시 캠퍼스</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center text-[11px] text-gray-655">
+                        <div class="bg-[#FCF8F4] p-2 rounded-lg border border-[#F3E7DA]">
+                            <span class="text-[9px] text-gray-400 block">열량</span>
+                            <span class="font-bold text-gray-800">${item.nutrients.kcal}</span>
+                        </div>
+                        <div class="bg-[#FCF8F4] p-2 rounded-lg border border-[#F3E7DA]">
+                            <span class="text-[9px] text-gray-400 block">단백질</span>
+                            <span class="font-bold text-gray-800">${item.nutrients.protein}</span>
+                        </div>
+                        <div class="bg-[#FCF8F4] p-2 rounded-lg border border-[#F3E7DA]">
+                            <span class="text-[9px] text-gray-400 block">나트륨</span>
+                            <span class="font-bold text-gray-800">${item.nutrients.sodium}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 리뷰 및 평점 요약 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold text-gray-855">구매 학생 한줄 평 (${item.reviewsCount})</h3>
+                        <div class="flex items-center gap-1">
+                            <i class="fa-solid fa-star text-yellow-500 text-xs"></i>
+                            <span class="text-xs font-bold text-gray-855">${item.rating}</span>
+                        </div>
+                    </div>
+
+                    <!-- 가상 베스트 댓글 1 -->
+                    <div class="p-2.5 bg-[#FFFDFC] border border-[#F3E7DA] rounded-lg space-y-1">
+                        <div class="flex justify-between text-[10px] text-gray-500">
+                            <span class="font-bold text-gray-700">경영학과 22학번 김*국</span>
+                            <span>오늘 11:30 작성</span>
+                        </div>
+                        <p class="text-xs text-gray-655">“학식 사전결제 앱 쓰니까 줄 안서서 너무 편합니다. 치즈제육은 진짜 진리입니다. 주문 밀리기 전에 미리 주문하는거 필수!”</p>
+                    </div>
+
+                    <!-- 가상 베스트 댓글 2 -->
+                    <div class="p-2.5 bg-[#FFFDFC] border border-[#F3E7DA] rounded-lg space-y-1">
+                        <div class="flex justify-between text-[10px] text-gray-500">
+                            <span class="font-bold text-gray-700">컴퓨터공학과 20학번 이*민</span>
+                            <span>어제 작성</span>
+                        </div>
+                        <p class="text-xs text-gray-655">“대기 없는 캠퍼스 솔루션이 따로 없네요! 밥 시간 맞춰 픽업만 하니 삶의 질이 수직 상승합니다.”</p>
+                    </div>
+                </div>
+
+                <!-- 하단 액션 바 -->
+                <div class="flex gap-2.5 pt-4">
+                    <button onclick="bookmarkItem()" class="w-12 h-12 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl flex items-center justify-center text-gray-500 hover:text-red-500 transition">
+                        <i class="fa-regular fa-heart text-lg"></i>
+                    </button>
+                    ${actionBtnHTML}
+                </div>
+            `;
+
+        changeTab('detail');
+      }
+
+      function goBackToMenu() {
+        changeTab('menu');
+      }
+
+      // ================= ORDER & PAYMENT PROCESS =================
+      let ACTIVE_ORDER_ITEM = null;
+
+      function orderNow(productId) {
+        const item = MENU_DATA.find((p) => p.id === productId);
+        if (!item) return;
+
+        if (item.stock === 0) {
+          showModal(
+            '품절 안내',
+            '죄송합니다. 해당 메뉴는 현재 실시간 재고가 모두 품절되었습니다.',
+            'fa-solid fa-triangle-exclamation text-yellow-500 bg-yellow-50',
+          );
+          return;
+        }
+
+        ACTIVE_ORDER_ITEM = item;
+
+        // 결제 화면 데이터 바인딩
+        document.getElementById('pay-cafeteria').innerText =
+          K_CAFE_DATA[item.cafeteria].name;
+        document.getElementById('pay-image').src = item.image;
+        document.getElementById('pay-menu-name').innerText = item.name;
+        document.getElementById('pay-price').innerText =
+          item.price.toLocaleString() + '원';
+        document.getElementById('pay-sum').innerText =
+          item.price.toLocaleString() + '원';
+
+        const discount = Math.round(item.price * 0.05);
+        const total = item.price - discount;
+
+        document.getElementById('pay-discount').innerText =
+          '-' + discount.toLocaleString() + '원';
+        document.getElementById('pay-total').innerText =
+          total.toLocaleString() + '원';
+        document.getElementById('total-button-price').innerText =
+          total.toLocaleString() + '원';
+
+        changeTab('payment');
+      }
+
+      function processPayment() {
+        if (!ACTIVE_ORDER_ITEM) return;
+
+        if (ACTIVE_ORDER_ITEM.stock > 0) {
+          ACTIVE_ORDER_ITEM.stock -= 1;
+        }
+
+        const orderNo = 'K' + Math.floor(100000 + Math.random() * 900000);
+        const pickupCode = Math.floor(100 + Math.random() * 900);
+        const discount = Math.round(ACTIVE_ORDER_ITEM.price * 0.05);
+        const total = ACTIVE_ORDER_ITEM.price - discount;
+
+        const newTicket = {
+          ticketId: orderNo,
+          menuId: ACTIVE_ORDER_ITEM.id,
+          menuName: ACTIVE_ORDER_ITEM.name,
+          cafeteria: ACTIVE_ORDER_ITEM.cafeteria,
+          price: total,
+          image: ACTIVE_ORDER_ITEM.image,
+          pickupCode: pickupCode,
+          status: 'ready',
+          orderTime: new Date().toLocaleTimeString('ko-KR', {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+          countDown: 600,
+        };
+
+        USER_TICKETS.unshift(newTicket);
+        updateWidgets();
+
+        showModal(
+          '결제 및 식권 생성 완료',
+          `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${ACTIVE_ORDER_ITEM.cafeteria} 픽업대로 이동하세요.`,
+          'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
+        );
+
+        setTimeout(() => {
+          changeTab('tickets');
+        }, 300);
+      }
+
+      // ================= TICKET WALLET =================
+      function renderTickets() {
+        const container = document.getElementById('tickets-container');
+        const noTickets = document.getElementById('no-tickets');
+
+        const existingTickets = container.querySelectorAll('.generated-ticket');
+        existingTickets.forEach((t) => t.remove());
+
+        if (USER_TICKETS.length === 0) {
+          noTickets.classList.remove('hidden');
+          return;
+        }
+
+        noTickets.classList.add('hidden');
+
+        USER_TICKETS.forEach((ticket, idx) => {
+          let statusText = '';
+          let statusColor = '';
+          let statusIcon = '';
+          let scanGuideHTML = '';
+
+          if (ticket.status === 'ready') {
+            statusText = '주문 대기 중';
+            statusColor = 'bg-blue-100 text-blue-800';
+            statusIcon = 'fa-solid fa-hourglass-start animate-spin';
+          } else if (ticket.status === 'preparing') {
+            statusText = '조리 중';
+            statusColor = 'bg-yellow-100 text-yellow-800';
+            statusIcon = 'fa-solid fa-fire';
+          } else if (ticket.status === 'complete') {
+            statusText = '조리 완료 (수령 대기)';
+            statusColor = 'bg-emerald-100 text-emerald-800 animate-bounce';
+            statusIcon = 'fa-solid fa-bell';
+          } else if (ticket.status === 'claimed') {
+            statusText = '식사 수령 완료';
+            statusColor = 'bg-gray-100 text-gray-500';
+            statusIcon = 'fa-solid fa-circle-check';
+          }
+
+          const isClaimed = ticket.status === 'claimed';
+          const opacityClass = isClaimed ? 'opacity-50' : '';
+
+          const ticketCard = document.createElement('div');
+          ticketCard.className = `generated-ticket bg-[#FFFDFC] border border-[#F3E7DA] rounded-2xl shadow-sm overflow-hidden ${opacityClass} relative`;
+
+          if (!isClaimed) {
+            scanGuideHTML = `<div class="scanner-line absolute left-0 right-0 top-0 h-0.5 bg-[#dfc355] opacity-80 shadow-[0_0_8px_#f0e1b1]"></div>`;
+          }
+
+          ticketCard.innerHTML = `
+                    <div class="bg-[#FCF8F4] px-4 py-3 flex justify-between items-center border-b border-[#F3E7DA]">
+                        <div>
+                            <span class="text-[10px] text-gray-400 font-bold block">ORDER NO. ${ticket.ticketId}</span>
+                            <span class="text-xs font-black text-gray-800">${K_CAFE_DATA[ticket.cafeteria].name}</span>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-full ${statusColor} flex items-center gap-1.5">
+                            <i class="${statusIcon}"></i> ${statusText}
+                        </span>
+                    </div>
+
+                    <div class="p-4 flex flex-col items-center text-center space-y-4">
+                        <div class="flex items-center gap-3 w-full text-left">
+                            <img src="${ticket.image}" alt="" class="w-12 h-12 rounded-lg object-cover">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-xs font-bold text-gray-800 truncate">${ticket.menuName}</h4>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-[10px] text-gray-400">결제일시 : ${ticket.orderTime}</span>
+                                    <span class="text-xs font-bold text-gray-800">${ticket.price.toLocaleString()}원</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 실시간 QR 및 대기번호 -->
+                        ${
+                          !isClaimed
+                            ? `
+                            <div class="relative w-44 h-44 bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-center overflow-hidden">
+                                ${scanGuideHTML}
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <path d="M5,5 h30 v30 h-30 z M15,15 h10 v10 h-10 z" fill="#0f172a"/>
+                                    <path d="M65,5 h30 v30 h-30 z M75,15 h10 v10 h-10 z" fill="#0f172a"/>
+                                    <path d="M5,65 h30 v30 h-30 z M15,75 h10 v10 h-10 z" fill="#0f172a"/>
+                                    <rect x="45" y="5" width="10" height="10" fill="#0f172a"/>
+                                    <rect x="45" y="25" width="10" height="20" fill="#0f172a"/>
+                                    <rect x="15" y="45" width="20" height="10" fill="#0f172a"/>
+                                    <rect x="45" y="55" width="15" height="15" fill="#0f172a"/>
+                                    <rect x="65" y="45" width="10" height="10" fill="#0f172a"/>
+                                    <rect x="75" y="55" width="20" height="20" fill="#0f172a"/>
+                                    <rect x="85" y="85" width="10" height="10" fill="#0f172a"/>
+                                    <rect x="65" y="75" width="10" height="15" fill="#0f172a"/>
+                                    <rect x="5" y="45" width="5" height="5" fill="#0f172a"/>
+                                    <rect x="55" y="85" width="10" height="5" fill="#0f172a"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-[10px] text-gray-400 block">배식을 위해 리더기에 QR을 스캔하세요</span>
+                                <h3 class="text-sm font-black text-gray-800 mt-1">픽업 대기 순번: <span class="text-gray-800 font-extrabold text-lg bg-[#f0e1b1] px-2.5 py-0.5 rounded border border-[#F3E7DA]">B-${ticket.pickupCode}</span></h3>
+                            </div>
+                        `
+                            : `
+                            <div class="w-44 h-44 bg-[#FCF8F4] rounded-xl border border-[#F3E7DA] flex flex-col items-center justify-center text-gray-400">
+                                <i class="fa-solid fa-receipt text-3xl mb-1 text-[#dfc355]"></i>
+                                <span class="text-xs font-bold text-gray-600">수령 및 식사 완료</span>
+                                <span class="text-[9px] text-gray-400">감사합니다! 맛있게 드셨나요?</span>
+                            </div>
+                        `
+                        }
+
+                        <!-- 가상 상태 제어기 -->
+                        <div class="w-full pt-3 border-t border-[#F3E7DA] flex gap-2">
+                            ${
+                              !isClaimed
+                                ? `
+                                <button onclick="simulateProcess(${idx})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[11px] font-bold py-2 rounded-lg border border-[#F3E7DA] transition">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> 조리 변경
+                                </button>
+                                <button onclick="claimMeal(${idx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2 rounded-lg transition">
+                                    <i class="fa-solid fa-utensils"></i> 수령 완료
+                                </button>
+                                <button onclick="cancelTicket(${idx})" class="text-gray-400 hover:text-red-500 text-[11px] font-bold px-2 py-2 border border-[#F3E7DA] bg-[#FFFDFC] rounded-lg transition">
+                                    환불신청
+                                </button>
+                            `
+                                : `
+                                <button onclick="writeFakeReview(${ticket.menuId})" class="w-full bg-[#FCF8F4] border border-[#F3E7DA] text-gray-700 hover:bg-[#F3E7DA] text-[11px] font-bold py-2 rounded-lg transition">
+                                    🌟 리얼 학식 후기 남기기
+                                </button>
+                            `
+                            }
+                        </div>
+                    </div>
+                `;
+          container.appendChild(ticketCard);
+        });
+      }
+
+      // 가상 시뮬레이터: 주문 -> 조리 -> 준비완료 순차 변경
+      function simulateProcess(idx) {
+        const ticket = USER_TICKETS[idx];
+        if (ticket.status === 'ready') {
+          ticket.status = 'preparing';
+          showModal(
+            '학식 조리 개시',
+            '주방에서 음식을 만들기 시작했습니다. 따뜻하게 준비 중입니다.',
+            'fa-solid fa-fire text-yellow-655 bg-yellow-50',
+          );
+        } else if (ticket.status === 'preparing') {
+          ticket.status = 'complete';
+          showModal(
+            '학식 조리 완료!',
+            '조리가 완료되었습니다! 픽업대로 오셔서 모바일 QR 식권을 바로 스캔하고 식기를 받아 가세요.',
+            'fa-solid fa-bell text-emerald-600 bg-emerald-50',
+          );
+        } else if (ticket.status === 'complete') {
+          ticket.status = 'ready';
+        }
+        renderTickets();
+      }
+
+      // 수령 완료 처리
+      function claimMeal(idx) {
+        USER_TICKETS[idx].status = 'claimed';
+        showModal(
+          '식사 전달 완료',
+          '성공적으로 수령 승인되었습니다. 즐거운 국민대 캠퍼스 학식 시간 되세요!',
+          'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
+        );
+        renderTickets();
+        updateWidgets();
+      }
+
+      // 환불/취소 처리
+      function cancelTicket(idx) {
+        const item = MENU_DATA.find((p) => p.id === USER_TICKETS[idx].menuId);
+        if (item) {
+          item.stock += 1;
+        }
+        USER_TICKETS.splice(idx, 1);
+        showModal(
+          '학식 환불 승인',
+          '조리 시작 전으로 즉시 환불이 완료되었습니다. 결제하신 수단으로 금액이 전액 반환됩니다.',
+          'fa-solid fa-arrow-rotate-left text-red-655 bg-red-50',
+        );
+        renderTickets();
+        updateWidgets();
+      }
+
+      // ================= WIDGET CONTROLLER =================
+      function updateWidgets() {
+        const activeTickets = USER_TICKETS.filter(
+          (t) => t.status !== 'claimed',
+        ).length;
+
+        const hBadge = document.getElementById('ticket-badge');
+        const nBadge = document.getElementById('nav-ticket-badge');
+        const pCount = document.getElementById('ticket-count-pill');
+
+        if (activeTickets > 0) {
+          hBadge.innerText = activeTickets;
+          hBadge.classList.remove('hidden');
+          nBadge.innerText = activeTickets;
+          nBadge.classList.remove('hidden');
+        } else {
+          hBadge.classList.add('hidden');
+          nBadge.classList.add('hidden');
+        }
+
+        if (pCount) {
+          pCount.innerText = `보유 식권 ${USER_TICKETS.length}장`;
+        }
+      }
+
+      // ================= MODAL UTILITIES =================
+      function showModal(title, message, iconClassAndBg) {
+        const modal = document.getElementById('app-modal');
+        const mTitle = document.getElementById('modal-title');
+        const mMessage = document.getElementById('modal-message');
+        const mIcon = document.getElementById('modal-icon');
+
+        mTitle.innerText = title;
+        mMessage.innerText = message;
+
+        mIcon.className = `w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl ${iconClassAndBg}`;
+
+        if (iconClassAndBg.includes('circle-check')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+        } else if (iconClassAndBg.includes('triangle-exclamation')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+        } else if (iconClassAndBg.includes('heart')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+        } else if (iconClassAndBg.includes('bell')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-bell"></i>`;
+        } else if (iconClassAndBg.includes('arrow-rotate-left')) {
+          mIcon.innerHTML = `<i class="fa-solid fa-arrow-rotate-left"></i>`;
+        } else {
+          mIcon.innerHTML = `<i class="fa-solid fa-info-circle"></i>`;
+        }
+
+        modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        document.getElementById('app-modal').classList.add('hidden');
+      }
+
+      function openNotification() {
+        showModal(
+          '학식 운영 시간 안내',
+          '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.\n\n- 법학관 : 11:00 ~ 14:00\n- 복지관 : 10:30 ~ 19:00',
+          'fa-solid fa-bell text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]',
+        );
+      }
+
+      function writeFakeReview(productId) {
+        showModal(
+          '리뷰 작성 완료',
+          '소중한 후기가 반영되었습니다! 10포인트가 적립되었습니다.',
+          'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
+        );
+      }
+    </script>
+  </body>
+</html>
