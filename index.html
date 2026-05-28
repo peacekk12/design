@@ -87,22 +87,14 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <button onclick="changeTab('tickets')" class="relative p-1">
-            <i
-              class="fa-solid fa-ticket text-xl text-gray-600 hover:text-[#d9b455] transition"
-            ></i>
-            <span
-              id="ticket-badge"
-              class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center hidden"
-              >0</span
-            >
-          </button>
+        <div class="flex items-center">
           <button
             onclick="openNotification()"
-            class="p-1 text-gray-600 hover:text-[#d9b455] transition"
+            aria-label="운영시간 확인"
+            class="inline-flex items-center gap-1.5 rounded-lg border border-[#F3E7DA] bg-[#FFFDFC] px-2.5 py-1.5 text-[11px] font-bold text-gray-700 shadow-sm hover:border-[#f0e1b1] hover:text-[#d9b455] transition"
           >
-            <i class="fa-solid fa-tower-broadcast text-xl"></i>
+            <i class="fa-regular fa-clock text-sm text-[#d9b455]"></i>
+            <span>운영시간</span>
           </button>
         </div>
       </header>
@@ -165,7 +157,7 @@
             </div>
 
             <div
-              class="grid grid-cols-2 gap-2 pt-3 border-t border-[#F3E7DA] text-center"
+              class="grid grid-cols-3 gap-2 pt-3 border-t border-[#F3E7DA] text-center"
             >
               <div>
                 <span class="text-[10px] text-gray-500 block"
@@ -173,6 +165,14 @@
                 >
                 <span class="text-xs font-bold text-gray-800" id="wait-time"
                   >약 5분 ~ 8분</span
+                >
+              </div>
+              <div class="border-l border-[#F3E7DA]">
+                <span class="text-[10px] text-gray-500 block"
+                  >현재 좌석</span
+                >
+                <span class="text-xs font-bold text-emerald-600" id="seat-status"
+                  >여유 42석</span
                 >
               </div>
               <div class="border-l border-[#F3E7DA]">
@@ -715,11 +715,21 @@
           name: '법학관 학생식당',
           waitCount: 12,
           waitTime: '약 5분 ~ 8분',
+          seatStatus: '여유',
+          seatCount: 42,
+          seatColor: 'text-emerald-600',
+          pickupBooth: '가칭 법학관 A픽업부스',
+          lineGuide: '법학관 입구 오른쪽 모바일 주문 전용줄',
         },
         복지관: {
           name: '복지관 학생식당',
           waitCount: 24,
           waitTime: '약 8분 ~ 12분',
+          seatStatus: '보통',
+          seatCount: 18,
+          seatColor: 'text-amber-600',
+          pickupBooth: '가칭 복지관 B픽업부스',
+          lineGuide: '복지관 식당 중앙 배식대 왼쪽 모바일 주문 전용줄',
         },
       };
 
@@ -865,6 +875,11 @@
           K_CAFE_DATA[name].waitCount + '명';
         document.getElementById('wait-time').innerText =
           K_CAFE_DATA[name].waitTime;
+        const seatStatus = document.getElementById('seat-status');
+        seatStatus.innerText =
+          K_CAFE_DATA[name].seatStatus + ' ' + K_CAFE_DATA[name].seatCount + '석';
+        seatStatus.className =
+          'text-xs font-bold ' + K_CAFE_DATA[name].seatColor;
       }
 
       // ================= MENU ACTIONS & RENDER =================
@@ -899,9 +914,14 @@
           filteredList = filteredList.filter((item) => item.stock > 0);
         }
 
-        // 메뉴 건수 표시
+        const soldOutCount = filteredList.filter((item) => item.stock === 0).length;
+        const lowStockCount = filteredList.filter(
+          (item) => item.stock > 0 && item.stock <= 5,
+        ).length;
+
+        // 메뉴 건수 및 품절 상태 표시
         document.getElementById('menu-count-text').innerText =
-          `총 ${filteredList.length}개 학식 판매 중`;
+          `총 ${filteredList.length}개 학식 판매 중 · 품절 ${soldOutCount}개 · 마감임박 ${lowStockCount}개`;
 
         if (filteredList.length === 0) {
           container.innerHTML = `
@@ -1201,6 +1221,8 @@
           menuId: ACTIVE_ORDER_ITEM.id,
           menuName: ACTIVE_ORDER_ITEM.name,
           cafeteria: ACTIVE_ORDER_ITEM.cafeteria,
+          pickupBooth: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth,
+          lineGuide: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].lineGuide,
           price: total,
           image: ACTIVE_ORDER_ITEM.image,
           pickupCode: pickupCode,
@@ -1217,7 +1239,7 @@
 
         showModal(
           '결제 및 식권 생성 완료',
-          `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${ACTIVE_ORDER_ITEM.cafeteria} 픽업대로 이동하세요.`,
+          `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth}로 이동하세요.`,
           'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
         );
 
@@ -1322,6 +1344,11 @@
                             </div>
                             <div>
                                 <span class="text-[10px] text-gray-400 block">배식을 위해 리더기에 QR을 스캔하세요</span>
+                                <div class="mt-1.5 mb-2 rounded-lg border border-[#F3E7DA] bg-[#FCF8F4] px-3 py-2 text-left">
+                                    <span class="text-[9px] text-gray-400 block">픽업부스명</span>
+                                    <strong class="text-xs text-gray-800">${ticket.pickupBooth || K_CAFE_DATA[ticket.cafeteria].pickupBooth}</strong>
+                                    <span class="text-[10px] text-gray-500 block mt-0.5">${ticket.lineGuide || K_CAFE_DATA[ticket.cafeteria].lineGuide}</span>
+                                </div>
                                 <h3 class="text-sm font-black text-gray-800 mt-1">픽업 대기 순번: <span class="text-gray-800 font-extrabold text-lg bg-[#f0e1b1] px-2.5 py-0.5 rounded border border-[#F3E7DA]">B-${ticket.pickupCode}</span></h3>
                             </div>
                         `
@@ -1424,12 +1451,16 @@
         const pCount = document.getElementById('ticket-count-pill');
 
         if (activeTickets > 0) {
-          hBadge.innerText = activeTickets;
-          hBadge.classList.remove('hidden');
+          if (hBadge) {
+            hBadge.innerText = activeTickets;
+            hBadge.classList.remove('hidden');
+          }
           nBadge.innerText = activeTickets;
           nBadge.classList.remove('hidden');
         } else {
-          hBadge.classList.add('hidden');
+          if (hBadge) {
+            hBadge.classList.add('hidden');
+          }
           nBadge.classList.add('hidden');
         }
 
