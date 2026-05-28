@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>국민대학교 학식 스마트 주문 서비스</title>
+    <title>국민학식 K-Bob - 국민대학교 학식 스마트 주문 서비스</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -157,7 +157,7 @@
             </div>
 
             <div
-              class="grid grid-cols-3 gap-2 pt-3 border-t border-[#F3E7DA] text-center"
+              class="grid grid-cols-2 gap-2 pt-3 border-t border-[#F3E7DA] text-center"
             >
               <div>
                 <span class="text-[10px] text-gray-500 block"
@@ -173,14 +173,6 @@
                 >
                 <span class="text-xs font-bold text-emerald-600" id="seat-status"
                   >여유 42석</span
-                >
-              </div>
-              <div class="border-l border-[#F3E7DA]">
-                <span class="text-[10px] text-gray-500 block"
-                  >모바일 즉시수령</span
-                >
-                <span class="text-xs font-bold text-emerald-600"
-                  ><i class="fa-solid fa-bolt"></i> 바로주문 가능</span
                 >
               </div>
             </div>
@@ -233,7 +225,7 @@
               <!-- 인기 카드 1 -->
               <div
                 onclick="viewProductDetail(1)"
-                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
               >
                 <div class="relative h-28 bg-gray-100">
                   <img
@@ -266,13 +258,23 @@
                       >3개 남음</span
                     >
                   </div>
+                  <div
+                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
+                  >
+                    <p class="truncate">
+                      <i class="fa-solid fa-star text-yellow-500"></i> 치즈가 많아서 든든해요
+                    </p>
+                    <p class="truncate">
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 점심 피크 전에 주문 추천
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <!-- 인기 카드 2 -->
               <div
                 onclick="viewProductDetail(2)"
-                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
               >
                 <div class="relative h-28 bg-gray-100">
                   <img
@@ -305,13 +307,23 @@
                       >여유 25개</span
                     >
                   </div>
+                  <div
+                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
+                  >
+                    <p class="truncate">
+                      <i class="fa-solid fa-star text-yellow-500"></i> 국물이 진해서 만족
+                    </p>
+                    <p class="truncate">
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 차슈 추가가 잘 어울려요
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <!-- 인기 카드 3 -->
               <div
                 onclick="viewProductDetail(4)"
-                class="min-w-[160px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
               >
                 <div class="relative h-28 bg-gray-100">
                   <img
@@ -343,6 +355,16 @@
                       class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded"
                       >여유 12개</span
                     >
+                  </div>
+                  <div
+                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
+                  >
+                    <p class="truncate">
+                      <i class="fa-solid fa-star text-yellow-500"></i> 밥이랑 먹기 좋아요
+                    </p>
+                    <p class="truncate">
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 자극적이지 않아 무난함
+                    </p>
                   </div>
                 </div>
               </div>
@@ -705,6 +727,60 @@
           </div>
         </div>
       </div>
+
+      <!-- ================= REVIEW WRITE MODAL ================= -->
+      <div
+        id="review-modal"
+        class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden"
+      >
+        <div
+          class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA]"
+        >
+          <div class="p-5 space-y-3">
+            <div class="text-center">
+              <div
+                class="w-12 h-12 rounded-full bg-[#FCF8F4] border border-[#F3E7DA] text-[#d9b455] flex items-center justify-center mx-auto text-xl"
+              >
+                <i class="fa-solid fa-pen"></i>
+              </div>
+              <h3 class="text-sm font-bold text-gray-900 mt-3">
+                학식 후기 작성
+              </h3>
+              <p class="text-[11px] text-gray-500 mt-1">
+                방금 먹은 메뉴에 대한 한줄평을 남겨주세요.
+              </p>
+            </div>
+
+            <textarea
+              id="review-input"
+              rows="4"
+              maxlength="80"
+              placeholder="예: 양이 많고 따뜻해서 만족했어요."
+              class="w-full resize-none rounded-xl border border-[#F3E7DA] bg-[#FCF8F4] p-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]"
+            ></textarea>
+
+            <p id="review-error" class="text-[10px] text-red-500 hidden">
+              리뷰 내용을 입력해주세요.
+            </p>
+          </div>
+          <div
+            class="bg-[#FCF8F4] border-t border-[#F3E7DA] px-4 py-3 flex gap-2"
+          >
+            <button
+              onclick="closeReviewModal()"
+              class="flex-1 bg-[#FFFDFC] hover:bg-[#F3E7DA] text-gray-600 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
+            >
+              취소
+            </button>
+            <button
+              onclick="submitReview()"
+              class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
+            >
+              등록
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 모바일 컨테이너 끝 -->
 
@@ -802,6 +878,8 @@
 
       // 가상 유저 구매 보관 식권 리스트
       let USER_TICKETS = [];
+      let USER_REVIEWS = {};
+      let REVIEW_TARGET_ID = null;
       let SELECTED_CAFETERIA = '법학관';
       let ACTIVE_FILTER = '전체';
       let EXCLUDE_SOLDOUT = false;
@@ -945,7 +1023,7 @@
             btnHTML = `<button disabled class="w-full bg-gray-200 text-gray-400 text-xs font-bold py-2 rounded-lg cursor-not-allowed">판매 종료</button>`;
           } else if (item.stock <= 5) {
             badgeHTML = `<span class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded animate-pulse">곧 마감 (${item.stock}개)</span>`;
-            btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">즉시 사전주문</button>`;
+            btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">사전주문</button>`;
           } else {
             badgeHTML = `<span class="bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">여유 (${item.stock}개)</span>`;
             btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2 rounded-lg transition border border-[#F3E7DA] shadow-sm">사전주문</button>`;
@@ -1041,7 +1119,7 @@
           actionBtnHTML = `<button disabled class="flex-1 bg-gray-350 text-gray-500 py-3.5 rounded-xl text-xs font-bold cursor-not-allowed">오늘 판매 종료</button>`;
         } else if (item.stock <= 5) {
           badgeHTML = `<span class="bg-red-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded animate-pulse">곧 마감 (${item.stock}개 남음)</span>`;
-          actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-red-500 hover:bg-red-655 text-white py-3.5 rounded-xl text-xs font-bold shadow-md transition">마감 전 긴급 사전주문</button>`;
+          actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-red-500 hover:bg-red-655 text-white py-3.5 rounded-xl text-xs font-bold shadow-md transition">사전주문 하기</button>`;
         } else {
           badgeHTML = `<span class="bg-emerald-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded">주문 가능 (${item.stock}개 남음)</span>`;
           actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 py-3.5 rounded-xl text-xs font-bold border border-[#F3E7DA] shadow-md transition">사전주문 하기</button>`;
@@ -1122,9 +1200,14 @@
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xs font-bold text-gray-855">구매 학생 한줄 평 (${item.reviewsCount})</h3>
-                        <div class="flex items-center gap-1">
-                            <i class="fa-solid fa-star text-yellow-500 text-xs"></i>
-                            <span class="text-xs font-bold text-gray-855">${item.rating}</span>
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1">
+                                <i class="fa-solid fa-star text-yellow-500 text-xs"></i>
+                                <span class="text-xs font-bold text-gray-855">${item.rating}</span>
+                            </div>
+                            <button onclick="writeFakeReview(${item.id})" class="bg-[#f0e1b1] text-gray-800 text-[10px] font-bold px-2 py-1 rounded-md border border-[#F3E7DA]">
+                                후기 작성
+                            </button>
                         </div>
                     </div>
 
@@ -1511,8 +1594,45 @@
       }
 
       function writeFakeReview(productId) {
+        REVIEW_TARGET_ID = productId;
+        document.getElementById('review-input').value = '';
+        document.getElementById('review-error').classList.add('hidden');
+        document.getElementById('review-modal').classList.remove('hidden');
+      }
+
+      function closeReviewModal() {
+        document.getElementById('review-modal').classList.add('hidden');
+      }
+
+      function submitReview() {
+        const input = document.getElementById('review-input');
+        const error = document.getElementById('review-error');
+        const reviewText = input.value.trim();
+
+        if (!reviewText) {
+          error.classList.remove('hidden');
+          input.focus();
+          return;
+        }
+
+        const item = MENU_DATA.find((p) => p.id === REVIEW_TARGET_ID);
+        if (item) {
+          item.reviewsCount += 1;
+          if (!USER_REVIEWS[item.id]) {
+            USER_REVIEWS[item.id] = [];
+          }
+          USER_REVIEWS[item.id].unshift({
+            text: reviewText,
+            time: new Date().toLocaleTimeString('ko-KR', {
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
+          });
+        }
+
+        closeReviewModal();
         showModal(
-          '리뷰 작성 완료',
+          '리뷰 등록 완료',
           '소중한 후기가 반영되었습니다! 10포인트가 적립되었습니다.',
           'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
         );
