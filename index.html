@@ -204,239 +204,180 @@
               선점하기
             </button>
           </div>
+<!-- 실시간 인기 학식 랭킹 -->
+<div>
+  <div class="flex justify-between items-center mb-3">
+    <h3 class="text-sm font-bold text-gray-855 flex items-center gap-1.5">
+      <span class="text-lg">🔥</span> 실시간 인기 메뉴 랭킹
+    </h3>
+    <button
+      onclick="changeTab('menu')"
+      class="text-[11px] text-[#d9b455] font-semibold"
+    >
+      전체보기 <i class="fa-solid fa-chevron-right text-[9px]"></i>
+    </button>
+  </div>
 
-          <!-- 실시간 인기 학식 랭킹 -->
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <h3
-                class="text-sm font-bold text-gray-855 flex items-center gap-1.5"
-              >
-                <span class="text-lg">🔥</span> 실시간 인기 메뉴 랭킹
-              </h3>
-              <button
-                onclick="changeTab('menu')"
-                class="text-[11px] text-[#d9b455] font-semibold"
-              >
-                전체보기 <i class="fa-solid fa-chevron-right text-[9px]"></i>
-              </button>
-            </div>
+  <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
 
-            <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-              <!-- 인기 카드 1 -->
-              <div
-                onclick="viewProductDetail(1)"
-                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
-              >
-                <div class="relative h-28 bg-gray-100">
-                  <img
-                    src="https://images.unsplash.com/photo-1580959375944-abd7e990f6c4?q=80&w=300&auto=format&fit=crop"
-                    alt="삼계탕"
-                    class="w-full h-full object-cover"
-                  />
-                  <span
-                    class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
-                    >곧 마감</span
-                  >
-                  <span
-                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
-                    >1위</span
-                  >
-                </div>
-                <div class="p-2.5">
-                  <span class="text-[9px] text-[#d9b455] font-medium"
-                    >법학관 식당</span
-                  >
-                  <h4 class="text-xs font-bold text-gray-800 truncate">
-                    삼계탕
-                  </h4>
-                  <div class="flex justify-between items-center mt-2">
-                    <span class="text-xs font-extrabold text-gray-900"
-                      >6,900원</span
-                    >
-                    <span
-                      class="text-[9px] text-red-600 font-bold bg-red-50 px-1.5 py-0.5 rounded"
-                      >3개 남음</span
-                    >
-                  </div>
-                  <div
-                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
-                  >
-                    <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 
-                    국물 진하고 닭도 부드러워서 정말 맛있게 먹었어요! 간도 적당하고 안에 찹쌀까지 든든하게 들어있어서 한 끼 식사로 최고였습니다.
-                    </p>
-                    <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 10분만
-                      늦어도 줄 섭니다
-                    </p>
-                  </div>
-                </div>
-              </div>
+    <!-- 인기 카드 1 -->
+    <div
+      onclick="viewProductDetail(1)"
+      class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+    >
+      <div class="relative h-28 bg-gray-100">
+        <img
+          src="학식2.jpg"
+          alt="삼계탕"
+          class="w-full h-full object-cover"
+        />
+        <span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
+          곧 마감
+        </span>
+        <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+          1위
+        </span>
+      </div>
 
-              <!-- 인기 카드 2 -->
-              <div
-                onclick="viewProductDetail(2)"
-                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
-              >
-                <div class="relative h-28 bg-gray-100">
-                  <img
-                    src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=300&auto=format&fit=crop"
-                    alt="카레라이스           <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-              <!-- 인기 카드 1 -->
-              <div
-                onclick="viewProductDetail(1)"
-                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
-              >
-                <div class="relative h-28 bg-gray-100">
-                  <img
-                    src="학식2.jpg"
-                    alt="삼계탕"
-                    class="w-full h-full object-cover"
-                  />
-                  <span
-                    class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
-                    >곧 마감</span
-                  >
-                  <span
-                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
-                    >1위</span
-                  >
-                </div>
-                <div class="p-2.5">
-                  <span class="text-[9px] text-[#d9b455] font-medium"
-                    >법학관 식당</span
-                  >
-                  <h4 class="text-xs font-bold text-gray-800 truncate">
-                    삼계탕
-                  </h4>
-                  <div class="flex justify-between items-center mt-2">
-                    <span class="text-xs font-extrabold text-gray-900"
-                      >6,900원</span
-                    >
-                    <span
-                      class="text-[9px] text-red-600 font-bold bg-red-50 px-1.5 py-0.5 rounded"
-                      >3개 남음</span
-                    >
-                  </div>
-                  <div
-                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
-                  >
-                    <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 
-                    국물 진하고 닭도 부드러워서 정말 맛있게 먹었어요! 간도 적당하고 안에 찹쌀까지 든든하게 들어있어서 한 끼 식사로 최고였습니다.
-                    </p>
-                    <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 10분만
-                      늦어도 줄 섭니다
-                    </p>
-                  </div>
-                </div>
-              </div>
+      <div class="p-2.5">
+        <span class="text-[9px] text-[#d9b455] font-medium">
+          법학관 식당
+        </span>
 
-              <!-- 인기 카드 2 -->
-              <div
-                onclick="viewProductDetail(2)"
-                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
-              >
-                <div class="relative h-28 bg-gray-100">
-                  <img
-                    src="학식1.jpg"
-                    alt="카레라이스"
-                    class="w-full h-full object-cover"
-                  />
-                  <span
-                    class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
-                    >주문가능</span
-                  >
-                  <span
-                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
-                    >2위</span
-                  >
-                </div>
-                <div class="p-2.5">
-                  <span class="text-[9px] text-[#d9b455] font-medium"
-                    >복지관 식당</span
-                  >
-                  <h4 class="text-xs font-bold text-gray-800 truncate">
-                    카레라이스
-                  </h4>
-                  <div class="flex justify-between items-center mt-2">
-                    <span class="text-xs font-extrabold text-gray-900"
-                      >4,500원</span
-                    >
-                    <span
-                      class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded"
-                      >여유 25개</span
-                    >
-                  </div>
-                  <div
-                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
-                  >
-                    <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 
-                     적당히 걸쭉하고 간도 딱 좋아서 만족했습니다.
-                    </p>
-                    <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 
-                      양도 괜찮고 가성비가 좋았어요
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <h4 class="text-xs font-bold text-gray-800 truncate">
+          삼계탕
+        </h4>
 
-              <!-- 인기 카드 3 -->
-              <div
-                onclick="viewProductDetail(4)"
-                class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
-              >
-                <div class="relative h-28 bg-gray-100">
-                  <img
-                    src="학식3.jpg"
-                    alt="짜장밥"
-                    class="w-full h-full object-cover"
-                  />
-                  <span
-                    class="absolute top-2 left-2 bg-emerald-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full"
-                    >주문가능</span
-                  >
-                  <span
-                    class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full"
-                    >3위</span
-                  >
-                </div>
-                <div class="p-2.5">
-                  <span class="text-[9px] text-[#d9b455] font-medium"
-                    >법학관 식당</span
-                  >
-                  <h4 class="text-xs font-bold text-gray-800 truncate">
-                    짜장밥
-                  </h4>
-                  <div class="flex justify-between items-center mt-2">
-                    <span class="text-xs font-extrabold text-gray-900"
-                      >4,500원</span
-                    >
-                    <span
-                      class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded"
-                      >여유 12개</span
-                    >
-                  </div>
-                  <div
-                    class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
-                  >
-                    <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 
-                      고기와 채소가 많이 들어감
-                    </p>
-                    <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 
-                      가성비 굳굳
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <div class="flex justify-between items-center mt-2">
+          <span class="text-xs font-extrabold text-gray-900">
+            6,900원
+          </span>
+
+          <span class="text-[9px] text-red-600 font-bold bg-red-50 px-1.5 py-0.5 rounded">
+            3개 남음
+          </span>
+        </div>
+
+        <div class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500">
+          <p class="truncate">
+            <i class="fa-solid fa-star text-yellow-500"></i>
+            국물 진하고 닭도 부드러워서 정말 맛있게 먹었어요!
+          </p>
+
+          <p class="truncate">
+            <i class="fa-solid fa-comment text-[#d9b455]"></i>
+            10분만 늦어도 줄 섭니다
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 인기 카드 2 -->
+    <div
+      onclick="viewProductDetail(2)"
+      class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+    >
+      <div class="relative h-28 bg-gray-100">
+        <img
+          src="학식1.jpg"
+          alt="카레라이스"
+          class="w-full h-full object-cover"
+        />
+        <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
+          주문가능
+        </span>
+        <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+          2위
+        </span>
+      </div>
+
+      <div class="p-2.5">
+        <span class="text-[9px] text-[#d9b455] font-medium">
+          복지관 식당
+        </span>
+
+        <h4 class="text-xs font-bold text-gray-800 truncate">
+          카레라이스
+        </h4>
+
+        <div class="flex justify-between items-center mt-2">
+          <span class="text-xs font-extrabold text-gray-900">
+            4,500원
+          </span>
+
+          <span class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">
+            여유 25개
+          </span>
+        </div>
+
+        <div class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500">
+          <p class="truncate">
+            <i class="fa-solid fa-star text-yellow-500"></i>
+            적당히 걸쭉하고 간도 딱 좋아서 만족했습니다.
+          </p>
+
+          <p class="truncate">
+            <i class="fa-solid fa-comment text-[#d9b455]"></i>
+            양도 괜찮고 가성비가 좋았어요
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 인기 카드 3 -->
+    <div
+      onclick="viewProductDetail(4)"
+      class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition"
+    >
+      <div class="relative h-28 bg-gray-100">
+        <img
+          src="학식3.jpg"
+          alt="짜장밥"
+          class="w-full h-full object-cover"
+        />
+        <span class="absolute top-2 left-2 bg-emerald-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full">
+          주문가능
+        </span>
+        <span class="absolute top-2 right-2 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+          3위
+        </span>
+      </div>
+
+      <div class="p-2.5">
+        <span class="text-[9px] text-[#d9b455] font-medium">
+          법학관 식당
+        </span>
+
+        <h4 class="text-xs font-bold text-gray-800 truncate">
+          짜장밥
+        </h4>
+
+        <div class="flex justify-between items-center mt-2">
+          <span class="text-xs font-extrabold text-gray-900">
+            4,500원
+          </span>
+
+          <span class="text-[9px] text-emerald-600 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">
+            여유 12개
+          </span>
+        </div>
+
+        <div class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500">
+          <p class="truncate">
+            <i class="fa-solid fa-star text-yellow-500"></i>
+            고기와 채소가 많이 들어감
+          </p>
+
+          <p class="truncate">
+            <i class="fa-solid fa-comment text-[#d9b455]"></i>
+            가성비 굳굳
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
         <!-- 2. MENU LIST SCREEN -->
         <section id="screen-menu" class="screen-view p-4 space-y-4 hidden">
