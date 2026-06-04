@@ -41,14 +41,14 @@
   </head>
   <body class="flex justify-center items-center min-h-screen">
     <div class="mobile-container w-full overflow-x-hidden flex flex-col justify-between">
- 
+
       <!-- TOP HEADER -->
       <header class="bg-[#FFFDFC] border-b border-[#F3E7DA] sticky top-0 z-40 px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-lg bg-[#f0e1b1] flex items-center justify-center text-gray-800 font-black text-lg shadow-sm border border-[#F3E7DA]">K</div>
           <div>
             <h1 class="text-base font-bold text-gray-850 leading-tight">
-              국밥 
+              국밥 <span class="text-[#d9b455] text-xs font-semibold">K-Bob</span>
             </h1>
           </div>
         </div>
@@ -60,13 +60,13 @@
           </button>
         </div>
       </header>
- 
+
       <!-- MAIN CONTENT -->
       <main class="flex-1 overflow-y-auto no-scrollbar pb-20">
- 
+
         <!-- 1. HOME SCREEN -->
         <section id="screen-home" class="screen-view p-4 space-y-5">
- 
+
           <!-- 식당 바로가기 -->
           <div class="grid grid-cols-2 gap-2.5">
             <button id="home-btn-법학관" onclick="selectCafeteria('법학관')"
@@ -84,7 +84,7 @@
               <span class="text-[9px] text-amber-600 font-semibold block mt-1 bg-amber-50 py-0.5 rounded-full"> 보통 (24명)</span>
             </button>
           </div>
- 
+
           <!-- 실시간 대기 대시보드 -->
           <div class="bg-gradient-to-br from-[#FFFDFC] to-[#f0e1b1]/35 text-gray-800 rounded-2xl p-5 shadow-sm border border-[#F3E7DA]">
             <div class="flex justify-between items-start mb-4">
@@ -108,7 +108,7 @@
               </div>
             </div>
           </div>
- 
+
           <!-- 한정 수량 알림 배너 -->
           <div class="bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl p-3 flex items-center justify-between shadow-sm">
             <div class="flex items-center gap-2.5">
@@ -126,7 +126,7 @@
               선점하기
             </button>
           </div>
- 
+
           <!-- 실시간 인기 메뉴 랭킹 -->
           <div>
             <div class="flex justify-between items-center mb-3">
@@ -137,9 +137,9 @@
                 전체보기 <i class="fa-solid fa-chevron-right text-[9px]"></i>
               </button>
             </div>
- 
+
             <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
- 
+
               <!-- 인기 카드 1 -->
               <div onclick="viewProductDetail(1)"
                 class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition">
@@ -162,7 +162,7 @@
                   </div>
                 </div>
               </div>
- 
+
               <!-- 인기 카드 2 -->
               <div onclick="viewProductDetail(2)"
                 class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition">
@@ -184,7 +184,7 @@
                   </div>
                 </div>
               </div>
- 
+
               <!-- 인기 카드 3 -->
               <div onclick="viewProductDetail(4)"
                 class="min-w-[190px] bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition">
@@ -207,12 +207,12 @@
                   </div>
                 </div>
               </div>
- 
+
             </div>
           </div>
           <!-- BUG FIX: screen-home 닫기 태그 누락 수정 -->
         </section>
- 
+
         <!-- 2. MENU LIST SCREEN -->
         <section id="screen-menu" class="screen-view p-4 space-y-4 hidden">
           <div class="flex bg-[#F3E7DA] p-1 rounded-xl">
@@ -223,14 +223,14 @@
             <button onclick="filterCafeteria('복지관')"
               class="menu-filter-btn flex-1 text-center py-2 text-xs font-semibold rounded-lg text-gray-655 transition">복지관</button>
           </div>
- 
+
           <div class="relative">
             <input type="text" id="menu-search-input" onkeyup="searchMenu()"
               placeholder="메뉴 이름이나 키워드를 검색하세요..."
               class="w-full text-xs pl-9 pr-4 py-3 bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]" />
             <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
           </div>
- 
+
           <div class="flex justify-between items-center">
             <span class="text-xs text-gray-500 font-medium" id="menu-count-text">총 4개 학식 판매 중</span>
             <button onclick="toggleSoldOutFilter()" id="soldout-filter-btn"
@@ -238,10 +238,10 @@
               <i class="fa-regular fa-square" id="soldout-checkbox"></i> 품절 제외
             </button>
           </div>
- 
+
           <div id="menu-items-container" class="space-y-3"></div>
         </section>
- 
+
         <!-- 3. MENU DETAIL SCREEN -->
         <section id="screen-detail" class="screen-view hidden">
           <div class="px-4 py-3 bg-[#FFFDFC] border-b border-[#F3E7DA] flex items-center gap-3">
@@ -252,7 +252,7 @@
           </div>
           <div id="detail-content" class="p-4 space-y-4"></div>
         </section>
- 
+
         <!-- 4. PAYMENT SCREEN -->
         <section id="screen-payment" class="screen-view hidden">
           <div class="px-4 py-3 bg-[#FFFDFC] border-b border-[#F3E7DA] flex items-center gap-3">
@@ -261,7 +261,7 @@
             </button>
             <span class="text-sm font-bold text-gray-850">결제하기</span>
           </div>
- 
+
           <div class="p-4 space-y-4" id="payment-content">
             <div class="bg-[#FFFDFC] p-4 rounded-xl border border-[#F3E7DA] shadow-sm">
               <h4 class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">주문 식당</h4>
@@ -274,7 +274,7 @@
                 </div>
               </div>
             </div>
- 
+
             <div class="bg-[#FCF8F4] text-gray-750 p-3.5 rounded-xl border border-[#F3E7DA] text-[11px] flex items-start gap-2.5">
               <i class="fa-solid fa-circle-info mt-0.5 text-[#d9b455]"></i>
               <div>
@@ -282,7 +282,7 @@
                 <p class="mt-0.5 leading-relaxed text-gray-500">결제 즉시 주방에 주문이 자동 전달되며, 실시간 QR코드 대기 순번이 생성됩니다. 10분 내 미픽업 시 폐기되며, 조리 전 환불은 원클릭으로 보장됩니다.</p>
               </div>
             </div>
- 
+
             <div class="space-y-2.5">
               <h3 class="text-xs font-bold text-gray-855">결제 수단</h3>
               <div class="space-y-2">
@@ -303,35 +303,30 @@
                 </label>
               </div>
             </div>
- 
+
             <div class="p-3.5 bg-[#FFFDFC] rounded-xl border border-[#F3E7DA] space-y-2">
-              <div class="flex justify-between text-xs text-gray-500">
-                <span>메뉴 금액</span><span id="pay-sum">5,500원</span>
-              </div>
-              <div class="flex justify-between text-xs text-gray-500">
-                <span>K-Pay 동문 할인 (5%)</span><span class="text-red-500" id="pay-discount">-0원</span>
-              </div>
-              <div class="flex justify-between text-sm font-bold text-gray-850 pt-2 border-t border-[#F3E7DA]">
+              <div class="flex justify-between text-sm font-bold text-gray-850">
                 <span>최종 결제 금액</span><span class="text-gray-800" id="pay-total">5,500원</span>
               </div>
             </div>
- 
+
             <p class="text-[10px] text-gray-400 text-center">위 주문 정보 및 실시간 마감 시간 전 픽업 규정을 확인하였으며 결제 처리에 동의합니다.</p>
- 
+
             <button onclick="processPayment()"
               class="w-full bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 py-3.5 rounded-xl font-bold text-sm shadow-md border border-[#F3E7DA] transition">
               <span id="total-button-price">5,500원</span> 결제 및 QR식권 발급
+
             </button>
           </div>
         </section>
- 
+
         <!-- 5. TICKET WALLET SCREEN -->
         <section id="screen-tickets" class="screen-view p-4 space-y-4 hidden">
           <div class="flex justify-between items-center">
             <h3 class="text-sm font-bold text-gray-855">내 보관함</h3>
             <span class="bg-[#F3E7DA] text-gray-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-[#f0e1b1]/50" id="ticket-count-pill">보유 식권 0장</span>
           </div>
- 
+
           <div id="tickets-container" class="space-y-4">
             <div id="no-tickets" class="text-center py-16 space-y-3 bg-[#FFFDFC] rounded-2xl border-2 border-dashed border-[#F3E7DA]">
               <div class="w-14 h-14 bg-[#FCF8F4] rounded-full flex items-center justify-center mx-auto text-gray-450 text-xl border border-[#F3E7DA]">
@@ -348,9 +343,9 @@
             </div>
           </div>
         </section>
- 
+
       </main>
- 
+
       <!-- BOTTOM NAVIGATION BAR -->
       <nav class="bg-[#FFFDFC] border-t border-[#F3E7DA] absolute bottom-0 left-0 right-0 z-40 px-4 py-2 flex justify-between items-center shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
         <button onclick="changeTab('home')" class="nav-btn flex flex-col items-center gap-1 py-1 flex-1 tab-active">
@@ -368,7 +363,7 @@
             class="absolute top-0 right-5 bg-red-500 text-white text-[8px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center hidden">0</span>
         </button>
       </nav>
- 
+
       <!-- MODAL -->
       <div id="app-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA] transform scale-95 transition-all">
@@ -383,7 +378,7 @@
           </div>
         </div>
       </div>
- 
+
       <!-- REVIEW MODAL -->
       <div id="review-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA]">
@@ -416,9 +411,9 @@
           </div>
         </div>
       </div>
- 
+
     </div>
- 
+
     <script>
       const K_CAFE_DATA = {
         법학관: {
@@ -442,7 +437,7 @@
           lineGuide: '복지관 식당 중앙 배식대 왼쪽 모바일 주문 전용줄',
         },
       };
- 
+
       const MENU_DATA = [
         {
           id: 1,
@@ -473,7 +468,7 @@
           rating: 4.5,
           reviewsCount: 89,
           image: '학식1.jpg',
-          stock: 25,
+          stock: 0,
           maxStock: 100,
           tags: ['한식', '가성비', '든든한'],
           description: '부드럽고 진한 카레 소스에 다양한 재료를 더해 맛과 영양을 모두 담은 메뉴입니다.',
@@ -511,7 +506,7 @@
           rating: 4.9,
           reviewsCount: 320,
           image: '학식5.jpg',
-          stock: 8,
+          stock: 0,
           maxStock: 150,
           tags: ['달콤', '핫트렌드', '양식'],
           description: '탱글한 면발과 풍부한 토마토 소스가 어우러진 누구나 즐기기 좋은 스파게티입니다.',
@@ -522,8 +517,9 @@
             { id: 503, author: '호랑', rating: 5, text: '면 익힘 정도도 적당했고 간도 적당!', date: '2026-05-29T12:30:00.000Z' }
           ]
         },
+
       ];
- 
+
       let USER_TICKETS = [];
       let REVIEW_TARGET_ID = null;
       let SELECTED_CAFETERIA = '법학관';
@@ -531,22 +527,22 @@
       let EXCLUDE_SOLDOUT = false;
       let CURRENT_REVIEW_SORT_BY = 'latest';
       let SELECTED_REVIEW_RATING = 5;
- 
+
       window.onload = function () {
         renderMenuList();
         updateWidgets();
       };
- 
+
       function changeTab(tabId) {
         document.querySelectorAll('.screen-view').forEach((s) => s.classList.add('hidden'));
         const activeScreen = document.getElementById(`screen-${tabId}`);
         if (activeScreen) activeScreen.classList.remove('hidden');
- 
+
         let btnIndex = 0;
         if (tabId === 'home') btnIndex = 0;
         else if (tabId === 'menu' || tabId === 'detail' || tabId === 'payment') btnIndex = 1;
         else if (tabId === 'tickets') btnIndex = 2;
- 
+
         document.querySelectorAll('.nav-btn').forEach((btn, idx) => {
           if (idx === btnIndex) {
             btn.classList.add('tab-active');
@@ -556,11 +552,11 @@
             btn.classList.add('text-gray-400');
           }
         });
- 
+
         if (tabId === 'menu') renderMenuList();
         else if (tabId === 'tickets') renderTickets();
       }
- 
+
       function selectCafeteria(name) {
         SELECTED_CAFETERIA = name;
         document.querySelectorAll('.cafeteria-btn').forEach((btn) => {
@@ -579,40 +575,40 @@
         seatStatus.innerText = K_CAFE_DATA[name].seatStatus + ' ' + K_CAFE_DATA[name].seatCount + '석';
         seatStatus.className = 'text-xs font-bold ' + K_CAFE_DATA[name].seatColor;
       }
- 
+
       function renderMenuList() {
         const container = document.getElementById('menu-items-container');
         container.innerHTML = '';
- 
+
         let filteredList = MENU_DATA;
         if (ACTIVE_FILTER !== '전체') {
           filteredList = filteredList.filter((item) => item.cafeteria === ACTIVE_FILTER);
         }
- 
+
         const searchQuery = document.getElementById('menu-search-input').value.toLowerCase().trim();
         if (searchQuery) {
           filteredList = filteredList.filter(
             (item) => item.name.toLowerCase().includes(searchQuery) || item.tags.some((tag) => tag.toLowerCase().includes(searchQuery))
           );
         }
- 
+
         if (EXCLUDE_SOLDOUT) filteredList = filteredList.filter((item) => item.stock > 0);
- 
+
         const soldOutCount = filteredList.filter((item) => item.stock === 0).length;
         const lowStockCount = filteredList.filter((item) => item.stock > 0 && item.stock <= 5).length;
         document.getElementById('menu-count-text').innerText = `총 ${filteredList.length}개 학식 판매 중 · 품절 ${soldOutCount}개 · 마감임박 ${lowStockCount}개`;
- 
+
         if (filteredList.length === 0) {
           container.innerHTML = `<div class="text-center py-12 text-gray-400 text-xs bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl"><i class="fa-solid fa-triangle-exclamation text-yellow-600 text-lg mb-2 block"></i>해당하는 메뉴가 없습니다.</div>`;
           return;
         }
- 
+
         filteredList.forEach((item) => {
           let badgeHTML = '', opacityClass = '', btnHTML = '';
           if (item.stock === 0) {
             badgeHTML = `<span class="bg-gray-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">품절</span>`;
             opacityClass = 'opacity-65';
-            btnHTML = `<button disabled class="w-full bg-gray-200 text-gray-400 text-xs font-bold py-2 rounded-lg cursor-not-allowed">판매 종료</button>`;
+            btnHTML = `<button disabled class="w-full bg-gray-200 text-gray-400 text-xs font-bold py-2 rounded-lg cursor-not-allowed">품절</button>`;
           } else if (item.stock <= 5) {
             badgeHTML = `<span class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded animate-pulse">곧 마감 (${item.stock}개)</span>`;
             btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">사전주문</button>`;
@@ -620,7 +616,7 @@
             badgeHTML = `<span class="bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">여유 (${item.stock}개)</span>`;
             btnHTML = `<button onclick="orderNow(${item.id})" class="w-full bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2 rounded-lg transition border border-[#F3E7DA] shadow-sm">사전주문</button>`;
           }
- 
+
           const itemCard = document.createElement('div');
           itemCard.className = `bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl overflow-hidden shadow-sm flex flex-col ${opacityClass} transition hover:shadow-md`;
           itemCard.innerHTML = `
@@ -644,7 +640,7 @@
           container.appendChild(itemCard);
         });
       }
- 
+
       function filterCafeteria(cafeteriaName) {
         ACTIVE_FILTER = cafeteriaName;
         const buttons = document.querySelectorAll('.menu-filter-btn');
@@ -658,9 +654,9 @@
         });
         renderMenuList();
       }
- 
+
       function searchMenu() { renderMenuList(); }
- 
+
       function toggleSoldOutFilter() {
         EXCLUDE_SOLDOUT = !EXCLUDE_SOLDOUT;
         const checkbox = document.getElementById('soldout-checkbox');
@@ -674,14 +670,14 @@
         }
         renderMenuList();
       }
- 
+
       function viewProductDetail(id) {
         const item = MENU_DATA.find((p) => p.id === id);
         if (!item) return;
- 
+
         CURRENT_REVIEW_SORT_BY = 'latest';
         const detailContainer = document.getElementById('detail-content');
- 
+
         let badgeHTML = '', actionBtnHTML = '';
         if (item.stock === 0) {
           badgeHTML = `<span class="bg-gray-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded">품절</span>`;
@@ -693,9 +689,9 @@
           badgeHTML = `<span class="bg-emerald-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded">주문 가능 (${item.stock}개 남음)</span>`;
           actionBtnHTML = `<button onclick="orderNow(${item.id})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 py-3.5 rounded-xl text-xs font-bold border border-[#F3E7DA] shadow-md transition">사전주문 하기</button>`;
         }
- 
+
         let tagsHTML = item.tags.map((t) => `<span class="bg-[#F3E7DA] text-gray-750 text-[10px] px-2.5 py-1 rounded-md">#${t}</span>`).join(' ');
- 
+
         detailContainer.innerHTML = `
           <div class="relative h-56 rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
@@ -761,17 +757,17 @@
             </button>
             ${actionBtnHTML}
           </div>`;
- 
+
         changeTab('detail');
         renderSortedReviews(item.id);
       }
- 
+
       // BUG FIX: 뒤로가기 시 필터 탭 UI 상태도 함께 복원
       function goBackToMenu() {
         filterCafeteria(ACTIVE_FILTER);
         changeTab('menu');
       }
- 
+
       function sortReviews(productId, sortBy) {
         CURRENT_REVIEW_SORT_BY = sortBy;
         const sortButtons = {
@@ -787,13 +783,13 @@
         });
         renderSortedReviews(productId);
       }
- 
+
       function renderSortedReviews(productId) {
         const item = MENU_DATA.find((p) => p.id === productId);
         if (!item) return;
         const container = document.getElementById('detail-reviews-container');
         if (!container) return;
- 
+
         let targetReviews = [...item.reviews];
         if (CURRENT_REVIEW_SORT_BY === 'latest') {
           targetReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -802,13 +798,13 @@
         } else if (CURRENT_REVIEW_SORT_BY === 'low') {
           targetReviews.sort((a, b) => a.rating === b.rating ? new Date(b.date) - new Date(a.date) : a.rating - b.rating);
         }
- 
+
         container.innerHTML = '';
         if (targetReviews.length === 0) {
           container.innerHTML = `<div class="text-center py-6 bg-white border border-[#F3E7DA] rounded-lg text-gray-400 text-xs">작성된 한줄평이 없습니다. 최초 후기를 작성해보세요!</div>`;
           return;
         }
- 
+
         targetReviews.forEach(rev => {
           let starsHTML = '';
           for (let i = 1; i <= 5; i++) {
@@ -831,7 +827,7 @@
           container.appendChild(reviewDiv);
         });
       }
- 
+
       function formatReviewDate(isoString) {
         const d = new Date(isoString);
         const now = new Date();
@@ -845,9 +841,9 @@
         const day = String(d.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
       }
- 
+
       let ACTIVE_ORDER_ITEM = null;
- 
+
       function orderNow(productId) {
         const item = MENU_DATA.find((p) => p.id === productId);
         if (!item) return;
@@ -860,24 +856,18 @@
         document.getElementById('pay-image').src = item.image;
         document.getElementById('pay-menu-name').innerText = item.name;
         document.getElementById('pay-price').innerText = item.price.toLocaleString() + '원';
-        document.getElementById('pay-sum').innerText = item.price.toLocaleString() + '원';
-        const discount = Math.round(item.price * 0.05);
-        const total = item.price - discount;
-        document.getElementById('pay-discount').innerText = '-' + discount.toLocaleString() + '원';
-        document.getElementById('pay-total').innerText = total.toLocaleString() + '원';
-        document.getElementById('total-button-price').innerText = total.toLocaleString() + '원';
+        document.getElementById('pay-total').innerText = item.price.toLocaleString() + '원';
+        document.getElementById('total-button-price').innerText = item.price.toLocaleString() + '원';
         changeTab('payment');
       }
- 
+
       function processPayment() {
         if (!ACTIVE_ORDER_ITEM) return;
         if (ACTIVE_ORDER_ITEM.stock > 0) ACTIVE_ORDER_ITEM.stock -= 1;
- 
+
         const orderNo = 'K' + Math.floor(100000 + Math.random() * 900000);
         const pickupCode = Math.floor(100 + Math.random() * 900);
-        const discount = Math.round(ACTIVE_ORDER_ITEM.price * 0.05);
-        const total = ACTIVE_ORDER_ITEM.price - discount;
- 
+
         const newTicket = {
           ticketId: orderNo,
           menuId: ACTIVE_ORDER_ITEM.id,
@@ -885,42 +875,42 @@
           cafeteria: ACTIVE_ORDER_ITEM.cafeteria,
           pickupBooth: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth,
           lineGuide: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].lineGuide,
-          price: total,
+          price: ACTIVE_ORDER_ITEM.price,
           image: ACTIVE_ORDER_ITEM.image,
           pickupCode: pickupCode,
           status: 'ready',
           orderTime: new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }),
           countDown: 600,
         };
- 
+
         USER_TICKETS.unshift(newTicket);
         updateWidgets();
         showModal('결제 및 식권 생성 완료', `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth}로 이동하세요.`, 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
         setTimeout(() => { changeTab('tickets'); }, 300);
       }
- 
+
       function renderTickets() {
         const container = document.getElementById('tickets-container');
         const noTickets = document.getElementById('no-tickets');
         container.querySelectorAll('.generated-ticket').forEach((t) => t.remove());
- 
+
         if (USER_TICKETS.length === 0) {
           noTickets.classList.remove('hidden');
           return;
         }
         noTickets.classList.add('hidden');
- 
+
         USER_TICKETS.forEach((ticket, idx) => {
           let statusText = '', statusColor = '', statusIcon = '';
           if (ticket.status === 'ready') { statusText = '주문 대기 중'; statusColor = 'bg-blue-100 text-blue-800'; statusIcon = 'fa-solid fa-hourglass-start animate-spin'; }
           else if (ticket.status === 'preparing') { statusText = '조리 중'; statusColor = 'bg-yellow-100 text-yellow-800'; statusIcon = 'fa-solid fa-fire'; }
           else if (ticket.status === 'complete') { statusText = '조리 완료 (수령 대기)'; statusColor = 'bg-emerald-100 text-emerald-800 animate-bounce'; statusIcon = 'fa-solid fa-bell'; }
           else if (ticket.status === 'claimed') { statusText = '식사 수령 완료'; statusColor = 'bg-gray-100 text-gray-500'; statusIcon = 'fa-solid fa-circle-check'; }
- 
+
           const isClaimed = ticket.status === 'claimed';
           const opacityClass = isClaimed ? 'opacity-50' : '';
           const scanGuideHTML = !isClaimed ? `<div class="scanner-line absolute left-0 right-0 top-0 h-0.5 bg-[#dfc355] opacity-80 shadow-[0_0_8px_#f0e1b1]"></div>` : '';
- 
+
           const ticketCard = document.createElement('div');
           ticketCard.className = `generated-ticket bg-[#FFFDFC] border border-[#F3E7DA] rounded-2xl shadow-sm overflow-hidden ${opacityClass} relative`;
           ticketCard.innerHTML = `
@@ -993,7 +983,7 @@
           container.appendChild(ticketCard);
         });
       }
- 
+
       function simulateProcess(idx) {
         const ticket = USER_TICKETS[idx];
         if (ticket.status === 'ready') {
@@ -1007,7 +997,7 @@
         }
         renderTickets();
       }
- 
+
       function scanQR(idx) {
         USER_TICKETS[idx].status = 'claimed';
         renderTickets();
@@ -1015,7 +1005,7 @@
         setTimeout(() => { changeTab('home'); }, 500);
         showModal('식사 전달 완료', 'QR 스캔이 완료되어 자동으로 수령 처리되었습니다.', 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
       }
- 
+
       function cancelTicket(idx) {
         const item = MENU_DATA.find((p) => p.id === USER_TICKETS[idx].menuId);
         if (item) item.stock += 1;
@@ -1024,13 +1014,13 @@
         renderTickets();
         updateWidgets();
       }
- 
+
       // BUG FIX: 존재하지 않는 'ticket-badge' ID 참조 제거
       function updateWidgets() {
         const activeTickets = USER_TICKETS.filter((t) => t.status !== 'claimed').length;
         const nBadge = document.getElementById('nav-ticket-badge');
         const pCount = document.getElementById('ticket-count-pill');
- 
+
         if (activeTickets > 0) {
           nBadge.innerText = activeTickets;
           nBadge.classList.remove('hidden');
@@ -1039,7 +1029,7 @@
         }
         if (pCount) pCount.innerText = `보유 식권 ${USER_TICKETS.length}장`;
       }
- 
+
       function showModal(title, message, iconClassAndBg) {
         document.getElementById('modal-title').innerText = title;
         document.getElementById('modal-message').innerHTML = message;
@@ -1053,17 +1043,17 @@
         else mIcon.innerHTML = `<i class="fa-solid fa-info-circle"></i>`;
         document.getElementById('app-modal').classList.remove('hidden');
       }
- 
+
       function closeModal() { document.getElementById('app-modal').classList.add('hidden'); }
- 
+
       function openNotification() {
         showModal('📢 학식 운영 시간 안내', '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.<br><br>⚖️ 법학관 : 10:30 ~ 18:30<br>🏢 복지관 : 조/중식 08:00 ~ 15:00<br>🌙 석식 17:00 ~ 18:30', 'fa-solid fa-bullhorn text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]');
       }
- 
+
       function bookmarkItem() {
         showModal('관심 학식 등록', '관심 메뉴로 등록되었습니다. 마감 전 및 특가 알림을 제공합니다.', 'fa-solid fa-heart text-red-500 bg-red-50');
       }
- 
+
       function writeReviewWithRating(productId) {
         REVIEW_TARGET_ID = productId;
         document.getElementById('review-input').value = '';
@@ -1071,7 +1061,7 @@
         selectReviewStar(5);
         document.getElementById('review-modal').classList.remove('hidden');
       }
- 
+
       function selectReviewStar(rating) {
         SELECTED_REVIEW_RATING = rating;
         const starButtons = document.querySelectorAll('.star-selector-btn');
@@ -1086,29 +1076,29 @@
           }
         });
       }
- 
+
       function closeReviewModal() { document.getElementById('review-modal').classList.add('hidden'); }
- 
+
       function submitReview() {
         const input = document.getElementById('review-input');
         const error = document.getElementById('review-error');
         const reviewText = input.value.trim();
         if (!reviewText) { error.classList.remove('hidden'); input.focus(); return; }
- 
+
         const item = MENU_DATA.find((p) => p.id === REVIEW_TARGET_ID);
         if (item) {
           item.reviews.unshift({ id: Date.now(), author: '국민대생', rating: SELECTED_REVIEW_RATING, text: reviewText, date: new Date().toISOString() });
           const totalRating = item.reviews.reduce((sum, r) => sum + r.rating, 0);
           item.rating = parseFloat((totalRating / item.reviews.length).toFixed(1));
           item.reviewsCount = item.reviews.length;
- 
+
           const reviewTitle = document.getElementById('detail-review-title');
           const avgRatingText = document.getElementById('detail-average-rating');
           if (reviewTitle) reviewTitle.innerText = `구매 학생 한줄 평 (${item.reviews.length})`;
           if (avgRatingText) avgRatingText.innerText = item.rating;
           renderSortedReviews(item.id);
         }
- 
+
         closeReviewModal();
         showModal('리뷰 등록 완료', '소중한 후기와 별점이 성공적으로 반영되었습니다! 10포인트가 함께 적립되었습니다.', 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
       }
