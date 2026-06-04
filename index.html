@@ -13,7 +13,7 @@
     />
     <!-- Google Fonts (Noto Sans KR) -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght=300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -103,12 +103,12 @@
       <main class="flex-1 overflow-y-auto no-scrollbar pb-20">
         <!-- 1. HOME SCREEN -->
         <section id="screen-home" class="screen-view p-4 space-y-5">
-          <!-- 국민대 식당 바로가기 Quick Links (법학관, 복지관 식당 부활) -->
+          <!-- 국민대 식당 바로가기 Quick Links -->
           <div class="grid grid-cols-2 gap-2.5">
             <button
               id="home-btn-법학관"
               onclick="selectCafeteria('법학관')"
-              class="cafeteria-btn bg-[#FFFDFC] border-2 border-[#f0e1b1] p-4 rounded-xl text-center transition shadow-sm"
+              class="cafeteria-btn bg-[#f0e1b1] border-2 border-[#f0e1b1] p-4 rounded-xl text-center transition shadow-sm"
             >
               <span class="block text-2xl mb-1">⚖️</span>
               <span class="text-xs font-bold text-gray-800">법학관 식당</span>
@@ -131,7 +131,7 @@
             </button>
           </div>
 
-          <!-- 실시간 대기 대시보드 (진하지 않고 부드러운 소프트 크림-골드 라이트 그라데이션 적용) -->
+          <!-- 실시간 대기 대시보드 -->
           <div
             class="bg-gradient-to-br from-[#FFFDFC] to-[#f0e1b1]/35 text-gray-800 rounded-2xl p-5 shadow-sm border border-[#F3E7DA]"
           >
@@ -168,7 +168,7 @@
                 >
               </div>
               <div class="border-l border-[#F3E7DA]">
-                <span class="text-[10px] text-gray-500 block">예상 잔여 좌석</span>
+                <span class="text-[10px] text-gray-500 block">현재 좌석</span>
                 <span
                   class="text-xs font-bold text-emerald-600"
                   id="seat-status"
@@ -205,11 +205,11 @@
             </button>
           </div>
 
-          <!-- 실시간 인기 학식 랭킹 (메뉴 이미지 포함) -->
+          <!-- 실시간 인기 학식 랭킹 -->
           <div>
             <div class="flex justify-between items-center mb-3">
               <h3
-                class="text-sm font-bold text-gray-850 flex items-center gap-1.5"
+                class="text-sm font-bold text-gray-855 flex items-center gap-1.5"
               >
                 <span class="text-lg">🔥</span> 실시간 인기 메뉴 랭킹
               </h3>
@@ -263,11 +263,11 @@
                   >
                     <p class="truncate">
                       <i class="fa-solid fa-star text-yellow-500"></i> 치즈가
-                      많아서 든든해요
+                      듬뿍 들어가 최고예요
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 점심
-                      피크 전에 주문 추천
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 10분만
+                      늦어도 줄 섭니다
                     </p>
                   </div>
                 </div>
@@ -317,8 +317,8 @@
                       진해서 만족
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 차슈
-                      추가가 잘 어울려요
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 차슈가
+                      생각보다 엄청 두껍네요
                     </p>
                   </div>
                 </div>
@@ -364,12 +364,12 @@
                     class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
                   >
                     <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 밥이랑
-                      먹기 좋아요
+                      <i class="fa-solid fa-star text-yellow-500"></i> 가마솥밥
+                      누룽지 진짜 최고
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i>
-                      자극적이지 않아 무난함
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 집밥
+                      생각날 때 딱 좋은 구수함
                     </p>
                   </div>
                 </div>
@@ -380,7 +380,7 @@
 
         <!-- 2. MENU LIST SCREEN -->
         <section id="screen-menu" class="screen-view p-4 space-y-4 hidden">
-          <!-- 상단 필터/탭 (복지관, 법학관 식당 탭 부활) -->
+          <!-- 상단 필터/탭 (복지관, 법학관 식당 탭) -->
           <div class="flex bg-[#F3E7DA] p-1 rounded-xl">
             <button
               onclick="filterCafeteria('전체')"
@@ -453,7 +453,7 @@
           </div>
 
           <div id="detail-content" class="p-4 space-y-4">
-            <!-- JavaScript로 상세 내용 렌더링 -->
+            <!-- JavaScript로 상세 내용 및 정렬된 리뷰 목록을 렌더링합니다 -->
           </div>
         </section>
 
@@ -494,10 +494,11 @@
                 <img
                   id="pay-image"
                   class="w-12 h-12 rounded-lg object-cover bg-gray-100"
+                  alt="결제 대상"
                 />
                 <div class="flex-1">
                   <h3
-                    class="text-sm font-bold text-gray-850"
+                    class="text-sm font-bold text-gray-855"
                     id="pay-menu-name"
                   >
                     메뉴 이름
@@ -626,7 +627,7 @@
         <!-- 5. TICKET WALLET SCREEN (QR 식권) -->
         <section id="screen-tickets" class="screen-view p-4 space-y-4 hidden">
           <div class="flex justify-between items-center">
-            <h3 class="text-sm font-bold text-gray-850">내 보관함</h3>
+            <h3 class="text-sm font-bold text-gray-855">내 보관함</h3>
             <span
               class="bg-[#F3E7DA] text-gray-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-[#f0e1b1]/50"
               id="ticket-count-pill"
@@ -734,7 +735,7 @@
         </div>
       </div>
 
-      <!-- ================= REVIEW WRITE MODAL ================= -->
+      <!-- ================= REVIEW WRITE MODAL WITH STARS ================= -->
       <div
         id="review-modal"
         class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden"
@@ -753,15 +754,35 @@
                 학식 후기 작성
               </h3>
               <p class="text-[11px] text-gray-500 mt-1">
-                방금 먹은 메뉴에 대한 한줄평을 남겨주세요.
+                방금 드신 메뉴는 어떠셨나요? 별점과 한줄평을 남겨주세요.
               </p>
             </div>
+
+            <!-- 대화형 별점 선택 UI -->
+            <div class="flex justify-center gap-2.5 py-1" id="star-rating-selector">
+              <button onclick="selectReviewStar(1)" class="star-selector-btn text-2xl text-yellow-500 transition-transform active:scale-125 focus:outline-none">
+                <i class="fa-solid fa-star"></i>
+              </button>
+              <button onclick="selectReviewStar(2)" class="star-selector-btn text-2xl text-yellow-500 transition-transform active:scale-125 focus:outline-none">
+                <i class="fa-solid fa-star"></i>
+              </button>
+              <button onclick="selectReviewStar(3)" class="star-selector-btn text-2xl text-yellow-500 transition-transform active:scale-125 focus:outline-none">
+                <i class="fa-solid fa-star"></i>
+              </button>
+              <button onclick="selectReviewStar(4)" class="star-selector-btn text-2xl text-yellow-500 transition-transform active:scale-125 focus:outline-none">
+                <i class="fa-solid fa-star"></i>
+              </button>
+              <button onclick="selectReviewStar(5)" class="star-selector-btn text-2xl text-yellow-500 transition-transform active:scale-125 focus:outline-none">
+                <i class="fa-solid fa-star"></i>
+              </button>
+            </div>
+            <p id="star-indicator-text" class="text-center text-[10px] font-bold text-amber-500">5점 (최고예요!)</p>
 
             <textarea
               id="review-input"
               rows="4"
               maxlength="80"
-              placeholder="예: 양이 많고 따뜻해서 만족했어요."
+              placeholder="예: 양이 많고 따뜻해서 만족했어요. 다음에 또 먹을래요!"
               class="w-full resize-none rounded-xl border border-[#F3E7DA] bg-[#FCF8F4] p-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]"
             ></textarea>
 
@@ -800,7 +821,7 @@
           seatStatus: '여유',
           seatCount: 42,
           seatColor: 'text-emerald-600',
-          pickupBooth: '가칭 법학관 A픽업부스',
+          pickupBooth: '법학관 A픽업부스',
           lineGuide: '법학관 입구 오른쪽 모바일 주문 전용줄',
         },
         복지관: {
@@ -810,11 +831,12 @@
           seatStatus: '보통',
           seatCount: 18,
           seatColor: 'text-amber-600',
-          pickupBooth: '가칭 복지관 B픽업부스',
+          pickupBooth: '복지관 B픽업부스',
           lineGuide: '복지관 식당 중앙 배식대 왼쪽 모바일 주문 전용줄',
         },
       };
 
+      // 체계적인 리뷰 정렬 및 계산을 위한 메뉴 원본 데이터 구조 수정
       const MENU_DATA = [
         {
           id: 1,
@@ -825,12 +847,20 @@
           reviewsCount: 142,
           image:
             'https://images.unsplash.com/photo-1580959375944-abd7e990f6c4?q=80&w=300&auto=format&fit=crop',
-          stock: 3, // 마감 임박
+          stock: 3, 
           maxStock: 80,
           tags: ['강력추천', '고기류', '가성비'],
           description:
             '국민대학교 법학관 부동의 인기 1위 메뉴! 매콤달콤하게 볶아낸 제육 위에 모짜렐라 치즈가 듬뿍 올라가 고소함을 더했습니다.',
           nutrients: { kcal: '785 kcal', protein: '34g', sodium: '850mg' },
+          // 실제 동작 및 정렬을 위한 리뷰 리스트
+          reviews: [
+            { id: 101, author: '멋쟁이', rating: 3, text: '양은 참 많은데 매운 걸 못 먹는 저에겐 살짝 자극적이었어요 ㅠㅠ', date: '2026-06-04T11:30:00.000Z' },
+            { id: 102, author: '당근먹는판다', rating: 5, text: '치즈 늘어나는 맛이 정말 일품입니다! 법학관 오면 무조건 이것만 주문해요.', date: '2026-06-03T12:10:00.000Z' },
+            { id: 103, author: '북악관러', rating: 5, text: '가성비 최강 학식! 고기 질도 괜찮고 불향이 은은하게 납니다.', date: '2026-06-02T13:45:00.000Z' },
+            { id: 104, author: '국민대새내기', rating: 4, text: '한 끼 든든하게 채우기 최고예요. 치즈 추가할 수 있으면 더 좋겠음!', date: '2026-05-31T09:20:00.000Z' },
+            { id: 105, author: '소식가', rating: 2, text: '양념 맛이 너무 강하고 고기가 살짝 퍽퍽해서 아쉬웠습니다.', date: '2026-05-28T12:00:00.000Z' }
+          ]
         },
         {
           id: 2,
@@ -841,12 +871,17 @@
           reviewsCount: 89,
           image:
             'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=300&auto=format&fit=crop',
-          stock: 25, // 여유
+          stock: 25, 
           maxStock: 100,
           tags: ['해장용', '면류', '일식'],
           description:
             '진한 돈골 육수에 감칠맛을 더하는 특제 소유(간장) 소스로 맛을 낸 고품격 정통 라멘입니다. 두툼한 차슈 2장 제공.',
           nutrients: { kcal: '650 kcal', protein: '28g', sodium: '1,200mg' },
+          reviews: [
+            { id: 201, author: '면쟁이', rating: 5, text: '국물이 진해서 해장용으로 정말 제격입니다. 차슈가 진짜 두꺼워서 놀랐네요.', date: '2026-06-04T14:15:00.000Z' },
+            { id: 202, author: '알리오올리오', rating: 4, text: '무난하게 맛있는 맛! 면 익힘 정도도 적당하고 아주 괜찮습니다.', date: '2026-06-03T11:05:00.000Z' },
+            { id: 203, author: '프로불편러', rating: 2, text: '국물이 살짝 짭짤한 편이라 밥 말아먹지 않으면 다 먹기 힘듭니다.', date: '2026-06-01T12:50:00.000Z' }
+          ]
         },
         {
           id: 4,
@@ -857,12 +892,17 @@
           reviewsCount: 65,
           image:
             'https://images.unsplash.com/photo-1608897013039-887f21d8c804?q=80&w=300&auto=format&fit=crop',
-          stock: 12, // 남음
+          stock: 12, 
           maxStock: 60,
           tags: ['한식', '가성비', '든든한'],
           description:
             '부드러운 차돌박이를 구수하고 진한 재래식 된장찌개에 끓여내었습니다. 법학관 전용 누룽지 가마솥밥이 함께 제공됩니다.',
           nutrients: { kcal: '580 kcal', protein: '22g', sodium: '710mg' },
+          reviews: [
+            { id: 401, author: '한식파', rating: 5, text: '가마솥밥에 숭늉 만들어 먹는 게 대박입니다. 5천원에 이 구성은 말이 안 됨!', date: '2026-06-04T12:20:00.000Z' },
+            { id: 402, author: '차돌박이귀신', rating: 3, text: '된장 국물 맛은 좋은데 고기가 좀 더 많이 들어갔으면 좋겠어요.', date: '2026-06-02T13:10:00.000Z' },
+            { id: 403, author: '북악골드', rating: 5, text: '구수하고 진해서 할머니가 끓여주신 된장찌개 생각나요. 대만족!', date: '2026-05-30T11:40:00.000Z' }
+          ]
         },
         {
           id: 5,
@@ -873,22 +913,30 @@
           reviewsCount: 320,
           image:
             'https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=300&auto=format&fit=crop',
-          stock: 8, // 곧마감
+          stock: 8, 
           maxStock: 150,
           tags: ['매콤', '핫트렌드', '중식'],
           description:
             '유행하는 마라 육수에 당면, 푸주, 청경채, 소고기 등 학생들이 선호하는 푸짐한 사리들을 직접 엄선하여 가득 채운 칼칼한 한 그릇입니다.',
           nutrients: { kcal: '720 kcal', protein: '18g', sodium: '1,450mg' },
+          reviews: [
+            { id: 501, author: '마라중독', rating: 5, text: '와 학식 마라탕 수준이 웬만한 전문점 뺨치네요. 국물이 진국입니다.', date: '2026-06-04T15:55:00.000Z' },
+            { id: 502, author: '맵린이', rating: 4, text: '살짝 얼얼하긴 한데 땀 흘리면서 먹으니 스트레스 확 풀립니다.', date: '2026-06-03T11:45:00.000Z' },
+            { id: 503, author: '푸주사랑', rating: 5, text: '재료 푸짐하고 위생적으로 느껴져서 자주 먹고 있어요. 최고입니다!', date: '2026-05-29T12:30:00.000Z' }
+          ]
         },
       ];
 
       // 가상 유저 구매 보관 식권 리스트
       let USER_TICKETS = [];
-      let USER_REVIEWS = {};
       let REVIEW_TARGET_ID = null;
       let SELECTED_CAFETERIA = '법학관';
       let ACTIVE_FILTER = '전체';
       let EXCLUDE_SOLDOUT = false;
+      
+      // 리뷰 정렬용 상태 및 모달 별점 입력용 상태 변수
+      let CURRENT_REVIEW_SORT_BY = 'latest'; // 기본 최신순
+      let SELECTED_REVIEW_RATING = 5; // 리뷰 작성 기본 별점 5점
 
       // ================= APP INITS =================
       window.onload = function () {
@@ -903,28 +951,31 @@
           .querySelectorAll('.screen-view')
           .forEach((s) => s.classList.add('hidden'));
 
-        // 모든 탭 스타일 초기화
-
         // 지정 스크린 활성화
         const activeScreen = document.getElementById(`screen-${tabId}`);
         if (activeScreen) {
           activeScreen.classList.remove('hidden');
         }
 
-        // 네비게이션 버튼 활성화 디자인 (강조색: #f0e1b1 대비 가시성 어두운 골드)
+        // 네비게이션 버튼 활성화 디자인
         let btnIndex = 0;
         if (tabId === 'home') btnIndex = 0;
         else if (tabId === 'menu' || tabId === 'detail' || tabId === 'payment')
           btnIndex = 1;
         else if (tabId === 'tickets') btnIndex = 2;
 
-        const targetBtn = document.querySelectorAll('.nav-btn')[btnIndex];
-        if (targetBtn) {
-          targetBtn.classList.add('tab-active');
-          targetBtn.classList.remove('text-gray-400');
-        }
+        const navBtns = document.querySelectorAll('.nav-btn');
+        navBtns.forEach((btn, idx) => {
+          if (idx === btnIndex) {
+            btn.classList.add('tab-active');
+            btn.classList.remove('text-gray-400');
+          } else {
+            btn.classList.remove('tab-active');
+            btn.classList.add('text-gray-400');
+          }
+        });
 
-        // 만약 탭이 이동하면 필요한 데이터 갱신
+        // 탭 이동 시 데이터 동적 갱신
         if (tabId === 'menu') {
           renderMenuList();
         } else if (tabId === 'tickets') {
@@ -936,25 +987,16 @@
       function selectCafeteria(name) {
         SELECTED_CAFETERIA = name;
 
-        // 버튼 상태 변경 (#f0e1b1를 강조 테두리로 사용, 미선택은 #F3E7DA)
+        // 버튼 상태 변경
         document.querySelectorAll('.cafeteria-btn').forEach((btn) => {
-          btn.classList.remove('border-[#f0e1b1]', 'border-2');
-          btn.classList.add('border-[#F3E7DA]', 'border');
+          btn.classList.remove('border-[#f0e1b1]', 'border-2', 'bg-[#f0e1b1]');
+          btn.classList.add('border-[#F3E7DA]', 'border', 'bg-[#FFFDFC]');
         });
 
         const activeBtn = document.getElementById(`home-btn-${name}`);
-        document.querySelectorAll('.cafeteria-btn').forEach((btn) => {
-          btn.classList.remove('bg-[#f0e1b1]');
-          btn.classList.add('bg-[#FFFDFC]');
-        });
-
         if (activeBtn) {
-          activeBtn.classList.remove('bg-[#FFFDFC]');
-          activeBtn.classList.add('bg-[#f0e1b1]');
-        }
-        if (activeBtn) {
-          activeBtn.classList.remove('border-[#F3E7DA]', 'border');
-          activeBtn.classList.add('border-[#f0e1b1]', 'border-2');
+          activeBtn.classList.remove('bg-[#FFFDFC]', 'border-[#F3E7DA]', 'border');
+          activeBtn.classList.add('bg-[#f0e1b1]', 'border-[#f0e1b1]', 'border-2');
         }
 
         // 대시보드 갱신
@@ -1059,11 +1101,11 @@
                                     ${badgeHTML}
                                     <span class="text-[10px] text-yellow-500 font-bold"><i class="fa-solid fa-star"></i> ${item.rating}</span>
                                 </div>
-                                <h3 class="text-xs font-bold text-gray-850 truncate mt-1">${item.name}</h3>
+                                <h3 class="text-xs font-bold text-gray-855 truncate mt-1">${item.name}</h3>
                                 <p class="text-[10px] text-gray-500 line-clamp-2 mt-0.5 leading-tight">${item.description}</p>
                             </div>
                             <div class="flex justify-between items-center mt-2">
-                                <span class="text-xs font-black text-gray-850">${item.price.toLocaleString()}원</span>
+                                <span class="text-xs font-black text-gray-855">${item.price.toLocaleString()}원</span>
                                 <div class="w-24">
                                     ${btnHTML}
                                 </div>
@@ -1125,6 +1167,9 @@
         const item = MENU_DATA.find((p) => p.id === id);
         if (!item) return;
 
+        // 기본 정렬을 '최신순'으로 세팅
+        CURRENT_REVIEW_SORT_BY = 'latest';
+
         const detailContainer = document.getElementById('detail-content');
 
         let badgeHTML = '';
@@ -1174,7 +1219,7 @@
 
                 <!-- 메뉴 개요 -->
                 <div class="bg-[#FFFDFC] p-3.5 rounded-xl border border-[#F3E7DA]">
-                    <h3 class="text-xs font-bold text-gray-850 mb-1">상세 구성 및 맛 설명</h3>
+                    <h3 class="text-xs font-bold text-gray-855 mb-1">상세 구성 및 맛 설명</h3>
                     <p class="text-xs text-gray-600 leading-relaxed">${item.description}</p>
                 </div>
 
@@ -1194,7 +1239,7 @@
                 <div class="border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl p-3.5">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-calculator text-gray-655"></i> 영양 성분 정보</span>
-                        <span class="text-[9px] text-gray-850 font-bold bg-[#FCF8F4] border border-[#F3E7DA] px-1.5 py-0.5 rounded">헬시 캠퍼스</span>
+                        <span class="text-[9px] text-gray-850 font-bold bg-[#FCF8F4] border border-[#F3E7DA] px-1.5 py-0.5 rounded">개인 정보 보호 기반</span>
                     </div>
                     <div class="grid grid-cols-3 gap-2 text-center text-[11px] text-gray-655">
                         <div class="bg-[#FCF8F4] p-2 rounded-lg border border-[#F3E7DA]">
@@ -1212,37 +1257,39 @@
                     </div>
                 </div>
 
-                <!-- 리뷰 및 평점 요약 -->
+                <!-- 리뷰 및 평점 요약 (개선된 데이터 구조 & 정렬 컨트롤 적용) -->
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-xs font-bold text-gray-855">구매 학생 한줄 평 (${item.reviewsCount})</h3>
+                        <div>
+                          <h3 class="text-xs font-bold text-gray-855" id="detail-review-title">구매 학생 한줄 평 (${item.reviews.length})</h3>
+                        </div>
                         <div class="flex items-center gap-2">
                             <div class="flex items-center gap-1">
                                 <i class="fa-solid fa-star text-yellow-500 text-xs"></i>
-                                <span class="text-xs font-bold text-gray-855">${item.rating}</span>
+                                <span class="text-xs font-bold text-gray-855" id="detail-average-rating">${item.rating}</span>
                             </div>
-                            <button onclick="writeFakeReview(${item.id})" class="bg-[#f0e1b1] text-gray-800 text-[10px] font-bold px-2 py-1 rounded-md border border-[#F3E7DA]">
+                            <button onclick="writeReviewWithRating(${item.id})" class="bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[10px] font-bold px-2 py-1 rounded-md border border-[#F3E7DA] transition">
                                 후기 작성
                             </button>
                         </div>
                     </div>
 
-                    <!-- 가상 베스트 댓글 1 -->
-                    <div class="p-2.5 bg-[#FFFDFC] border border-[#F3E7DA] rounded-lg space-y-1">
-                        <div class="flex justify-between text-[10px] text-gray-500">
-                            <span class="font-bold text-gray-700">멋쟁이</span>
-                            <span>오늘 11:30 작성</span>
-                        </div>
-                        <p class="text-xs text-gray-655">"너무 매워요, 고기 냄새도 살짝 납니다ㅠㅠ”</p>
+                    <!-- 리뷰 정렬 탭 버튼 영역 -->
+                    <div class="flex items-center gap-1 bg-[#F3E7DA]/50 p-1 rounded-lg">
+                        <button id="review-sort-latest" onclick="sortReviews(${item.id}, 'latest')" class="flex-1 py-1 text-[10px] font-bold rounded bg-white text-gray-800 shadow-sm border border-[#F3E7DA]/30">
+                            최신순
+                        </button>
+                        <button id="review-sort-high" onclick="sortReviews(${item.id}, 'high')" class="flex-1 py-1 text-[10px] font-semibold rounded text-gray-500 hover:text-gray-800">
+                            별점 높은 순
+                        </button>
+                        <button id="review-sort-low" onclick="sortReviews(${item.id}, 'low')" class="flex-1 py-1 text-[10px] font-semibold rounded text-gray-500 hover:text-gray-800">
+                            별점 낮은 순
+                        </button>
                     </div>
 
-                    <!-- 가상 베스트 댓글 2 -->
-                    <div class="p-2.5 bg-[#FFFDFC] border border-[#F3E7DA] rounded-lg space-y-1">
-                        <div class="flex justify-between text-[10px] text-gray-500">
-                            <span class="font-bold text-gray-700">당근먹는판다</span>
-                            <span>어제 작성</span>
-                        </div>
-                        <p class="text-xs text-gray-655">“양도 많고 맛있어요!!”</p>
+                    <!-- 정렬된 리뷰들이 렌더링되는 영역 -->
+                    <div id="detail-reviews-container" class="space-y-2.5">
+                        <!-- 동적 정렬된 리뷰 목록 -->
                     </div>
                 </div>
 
@@ -1256,10 +1303,128 @@
             `;
 
         changeTab('detail');
+        // 세부 리뷰 목록 렌더링
+        renderSortedReviews(item.id);
       }
 
       function goBackToMenu() {
         changeTab('menu');
+      }
+
+      // ================= REVIEW SORTING LOGIC =================
+      function sortReviews(productId, sortBy) {
+        CURRENT_REVIEW_SORT_BY = sortBy;
+        
+        // 정렬 탭 UI 디자인 토글
+        const sortButtons = {
+          latest: document.getElementById('review-sort-latest'),
+          high: document.getElementById('review-sort-high'),
+          low: document.getElementById('review-sort-low')
+        };
+
+        Object.keys(sortButtons).forEach(key => {
+          if (sortButtons[key]) {
+            if (key === sortBy) {
+              sortButtons[key].className = "flex-1 py-1 text-[10px] font-bold rounded bg-white text-gray-800 shadow-sm border border-[#F3E7DA]/30";
+            } else {
+              sortButtons[key].className = "flex-1 py-1 text-[10px] font-semibold rounded text-gray-500 hover:text-gray-800";
+            }
+          }
+        });
+
+        renderSortedReviews(productId);
+      }
+
+      function renderSortedReviews(productId) {
+        const item = MENU_DATA.find((p) => p.id === productId);
+        if (!item) return;
+
+        const container = document.getElementById('detail-reviews-container');
+        if (!container) return;
+
+        // 리뷰 카피본을 가져와 정렬 처리
+        let targetReviews = [...item.reviews];
+
+        if (CURRENT_REVIEW_SORT_BY === 'latest') {
+          // 최신순 (ISO Date 스트링 비교)
+          targetReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else if (CURRENT_REVIEW_SORT_BY === 'high') {
+          // 별점 높은 순 -> 같으면 최신순
+          targetReviews.sort((a, b) => {
+            if (b.rating === a.rating) {
+              return new Date(b.date) - new Date(a.date);
+            }
+            return b.rating - a.rating;
+          });
+        } else if (CURRENT_REVIEW_SORT_BY === 'low') {
+          // 별점 낮은 순 -> 같으면 최신순
+          targetReviews.sort((a, b) => {
+            if (a.rating === b.rating) {
+              return new Date(b.date) - new Date(a.date);
+            }
+            return a.rating - b.rating;
+          });
+        }
+
+        container.innerHTML = '';
+
+        if (targetReviews.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-6 bg-white border border-[#F3E7DA] rounded-lg text-gray-400 text-xs">
+              작성된 한줄평이 없습니다. 최초 후기를 작성해보세요!
+            </div>
+          `;
+          return;
+        }
+
+        targetReviews.forEach(rev => {
+          // 별점 아이콘 생성
+          let starsHTML = '';
+          for (let i = 1; i <= 5; i++) {
+            if (i <= rev.rating) {
+              starsHTML += `<i class="fa-solid fa-star text-yellow-500"></i>`;
+            } else {
+              starsHTML += `<i class="fa-regular fa-star text-gray-300"></i>`;
+            }
+          }
+
+          // 작성 시간 예쁘게 표현
+          const formattedDate = formatReviewDate(rev.date);
+
+          const reviewDiv = document.createElement('div');
+          reviewDiv.className = 'p-3 bg-[#FFFDFC] border border-[#F3E7DA] rounded-xl space-y-1.5 shadow-xs';
+          reviewDiv.innerHTML = `
+              <div class="flex justify-between items-center text-[10px] text-gray-500">
+                  <div class="flex items-center gap-1.5">
+                      <span class="font-bold text-gray-700">${rev.author}</span>
+                      <div class="flex items-center text-[9px] text-yellow-500 gap-0.5">
+                          ${starsHTML}
+                      </div>
+                  </div>
+                  <span class="text-gray-400">${formattedDate}</span>
+              </div>
+              <p class="text-xs text-gray-700 leading-snug">"${rev.text}"</p>
+          `;
+          container.appendChild(reviewDiv);
+        });
+      }
+
+      // 날짜 포맷 함수
+      function formatReviewDate(isoString) {
+        const d = new Date(isoString);
+        const now = new Date();
+        const diffMs = now - d;
+        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+        if (diffMinutes < 1) return '방금 전';
+        if (diffMinutes < 60) return `${diffMinutes}분 전`;
+        if (diffHours < 24) return `${diffHours}시간 전`;
+        
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
       }
 
       // ================= ORDER & PAYMENT PROCESS =================
@@ -1424,9 +1589,9 @@
                           !isClaimed
                             ? `
                             <div
-  onclick="scanQR(${idx})"
-  class="relative w-44 h-44 bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-center overflow-hidden cursor-pointer"
->
+                              onclick="scanQR(${idx})"
+                              class="relative w-44 h-44 bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-center overflow-hidden cursor-pointer"
+                            >
                                 ${scanGuideHTML}
                                 <svg class="w-full h-full" viewBox="0 0 100 100">
                                     <path d="M5,5 h30 v30 h-30 z M15,15 h10 v10 h-10 z" fill="#0f172a"/>
@@ -1477,7 +1642,7 @@
                                 </button>
                             `
                                 : `
-                                <button onclick="writeFakeReview(${ticket.menuId})" class="w-full bg-[#FCF8F4] border border-[#F3E7DA] text-gray-700 hover:bg-[#F3E7DA] text-[11px] font-bold py-2 rounded-lg transition">
+                                <button onclick="writeReviewWithRating(${ticket.menuId})" class="w-full bg-[#FCF8F4] border border-[#F3E7DA] text-gray-700 hover:bg-[#F3E7DA] text-[11px] font-bold py-2 rounded-lg transition">
                                     🌟 리얼 학식 후기 남기기
                                 </button>
                             `
@@ -1510,18 +1675,6 @@
           ticket.status = 'ready';
         }
         renderTickets();
-      }
-
-      // 수령 완료 처리
-      function claimMeal(idx) {
-        USER_TICKETS[idx].status = 'claimed';
-        showModal(
-          '식사 전달 완료',
-          '성공적으로 수령 승인되었습니다. 즐거운 국민대 캠퍼스 학식 시간 되세요!',
-          'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
-        );
-        renderTickets();
-        updateWidgets();
       }
 
       function scanQR(idx) {
@@ -1627,11 +1780,54 @@
         );
       }
 
-      function writeFakeReview(productId) {
+      function bookmarkItem() {
+        showModal(
+          '관심 학식 등록',
+          '관심 메뉴로 등록되었습니다. 마감 전 및 특가 알림을 제공합니다.',
+          'fa-solid fa-heart text-red-500 bg-red-50'
+        );
+      }
+
+      // ================= REVIEW WRITING IN MODAL LOGIC =================
+      function writeReviewWithRating(productId) {
         REVIEW_TARGET_ID = productId;
         document.getElementById('review-input').value = '';
         document.getElementById('review-error').classList.add('hidden');
+        
+        // 기본 별점(5점)으로 리셋 세팅
+        selectReviewStar(5);
+        
         document.getElementById('review-modal').classList.remove('hidden');
+      }
+
+      function selectReviewStar(rating) {
+        SELECTED_REVIEW_RATING = rating;
+        
+        const starButtons = document.querySelectorAll('.star-selector-btn');
+        const indicatorText = document.getElementById('star-indicator-text');
+        
+        const textMap = {
+          1: '1점 (아쉬워요...)',
+          2: '2점 (보통이에요)',
+          3: '3점 (괜찮아요)',
+          4: '4점 (맛있어요!)',
+          5: '5점 (최고예요!)'
+        };
+
+        indicatorText.innerText = textMap[rating];
+
+        starButtons.forEach((btn, index) => {
+          const starIcon = btn.querySelector('i');
+          if (index < rating) {
+            starIcon.className = 'fa-solid fa-star';
+            starIcon.classList.remove('text-gray-300');
+            starIcon.classList.add('text-yellow-500');
+          } else {
+            starIcon.className = 'fa-regular fa-star';
+            starIcon.classList.remove('text-yellow-500');
+            starIcon.classList.add('text-gray-300');
+          }
+        });
       }
 
       function closeReviewModal() {
@@ -1651,23 +1847,37 @@
 
         const item = MENU_DATA.find((p) => p.id === REVIEW_TARGET_ID);
         if (item) {
-          item.reviewsCount += 1;
-          if (!USER_REVIEWS[item.id]) {
-            USER_REVIEWS[item.id] = [];
-          }
-          USER_REVIEWS[item.id].unshift({
+          // 리뷰 구조화 데이터에 동적 신규 별점/내용으로 추가
+          const newReviewObj = {
+            id: Date.now(),
+            author: '국민대생',
+            rating: SELECTED_REVIEW_RATING,
             text: reviewText,
-            time: new Date().toLocaleTimeString('ko-KR', {
-              hour: '2-digit',
-              minute: '2-digit',
-            }),
-          });
+            date: new Date().toISOString()
+          };
+
+          item.reviews.unshift(newReviewObj);
+
+          // 전체 평균 별점 및 리뷰 수 실시간 가계산
+          const totalRating = item.reviews.reduce((sum, r) => sum + r.rating, 0);
+          item.rating = parseFloat((totalRating / item.reviews.length).toFixed(1));
+          item.reviewsCount = item.reviews.length;
+
+          // 상세 스크린 평점 뷰 동적 새로고침
+          const reviewTitle = document.getElementById('detail-review-title');
+          const avgRatingText = document.getElementById('detail-average-rating');
+          
+          if (reviewTitle) reviewTitle.innerText = `구매 학생 한줄 평 (${item.reviews.length})`;
+          if (avgRatingText) avgRatingText.innerText = item.rating;
+
+          // 정렬 상태를 유지하며 리뷰 다시 그리기
+          renderSortedReviews(item.id);
         }
 
         closeReviewModal();
         showModal(
           '리뷰 등록 완료',
-          '소중한 후기가 반영되었습니다! 10포인트가 적립되었습니다.',
+          '소중한 후기와 별점이 성공적으로 반영되었습니다! 10포인트가 함께 적립되었습니다.',
           'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
         );
       }
