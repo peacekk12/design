@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>국민대학교 학식 스마트 주문 서비스</title>
+    <title>국밥</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -168,10 +168,10 @@
                 >
               </div>
               <div class="border-l border-[#F3E7DA]">
-                <span class="text-[10px] text-gray-500 block"
-                  >현재 좌석</span
-                >
-                <span class="text-xs font-bold text-emerald-600" id="seat-status"
+                <span class="text-[10px] text-gray-500 block">현재 좌석</span>
+                <span
+                  class="text-xs font-bold text-emerald-600"
+                  id="seat-status"
                   >여유 42석</span
                 >
               </div>
@@ -262,10 +262,12 @@
                     class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
                   >
                     <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 치즈가 많아서 든든해요
+                      <i class="fa-solid fa-star text-yellow-500"></i> 치즈가
+                      많아서 든든해요
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 점심 피크 전에 주문 추천
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 점심
+                      피크 전에 주문 추천
                     </p>
                   </div>
                 </div>
@@ -311,10 +313,12 @@
                     class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
                   >
                     <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 국물이 진해서 만족
+                      <i class="fa-solid fa-star text-yellow-500"></i> 국물이
+                      진해서 만족
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 차슈 추가가 잘 어울려요
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 차슈
+                      추가가 잘 어울려요
                     </p>
                   </div>
                 </div>
@@ -360,10 +364,12 @@
                     class="mt-2 space-y-1 border-t border-[#F3E7DA] pt-2 text-[10px] text-gray-500"
                   >
                     <p class="truncate">
-                      <i class="fa-solid fa-star text-yellow-500"></i> 밥이랑 먹기 좋아요
+                      <i class="fa-solid fa-star text-yellow-500"></i> 밥이랑
+                      먹기 좋아요
                     </p>
                     <p class="truncate">
-                      <i class="fa-solid fa-comment text-[#d9b455]"></i> 자극적이지 않아 무난함
+                      <i class="fa-solid fa-comment text-[#d9b455]"></i>
+                      자극적이지 않아 무난함
                     </p>
                   </div>
                 </div>
@@ -728,98 +734,61 @@
         </div>
       </div>
 
-     <!-- ================= REVIEW WRITE MODAL ================= -->
-<div
-  id="review-modal"
-  class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden"
->
-  <div
-    class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA]"
-  >
-    <div class="p-5 space-y-4">
-      <div class="text-center">
+      <!-- ================= REVIEW WRITE MODAL ================= -->
+      <div
+        id="review-modal"
+        class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden"
+      >
         <div
-          class="w-12 h-12 rounded-full bg-[#FCF8F4] border border-[#F3E7DA] text-[#d9b455] flex items-center justify-center mx-auto text-xl"
+          class="bg-[#FFFDFC] w-full max-w-xs rounded-2xl overflow-hidden shadow-xl border border-[#F3E7DA]"
         >
-          <i class="fa-solid fa-pen"></i>
+          <div class="p-5 space-y-3">
+            <div class="text-center">
+              <div
+                class="w-12 h-12 rounded-full bg-[#FCF8F4] border border-[#F3E7DA] text-[#d9b455] flex items-center justify-center mx-auto text-xl"
+              >
+                <i class="fa-solid fa-pen"></i>
+              </div>
+              <h3 class="text-sm font-bold text-gray-900 mt-3">
+                학식 후기 작성
+              </h3>
+              <p class="text-[11px] text-gray-500 mt-1">
+                방금 먹은 메뉴에 대한 한줄평을 남겨주세요.
+              </p>
+            </div>
+
+            <textarea
+              id="review-input"
+              rows="4"
+              maxlength="80"
+              placeholder="예: 양이 많고 따뜻해서 만족했어요."
+              class="w-full resize-none rounded-xl border border-[#F3E7DA] bg-[#FCF8F4] p-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]"
+            ></textarea>
+
+            <p id="review-error" class="text-[10px] text-red-500 hidden">
+              리뷰 내용을 입력해주세요.
+            </p>
+          </div>
+          <div
+            class="bg-[#FCF8F4] border-t border-[#F3E7DA] px-4 py-3 flex gap-2"
+          >
+            <button
+              onclick="closeReviewModal()"
+              class="flex-1 bg-[#FFFDFC] hover:bg-[#F3E7DA] text-gray-600 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
+            >
+              취소
+            </button>
+            <button
+              onclick="submitReview()"
+              class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
+            >
+              등록
+            </button>
+          </div>
         </div>
-
-        <h3 class="text-sm font-bold text-gray-900 mt-3">
-          학식 후기 작성
-        </h3>
-
-        <p class="text-[11px] text-gray-500 mt-1">
-          먹어본 메뉴에 대한 솔직한 후기를 남겨주세요.
-        </p>
       </div>
-
-      <!-- 별점 -->
-      <div class="flex flex-col items-center gap-2">
-        <span class="text-[11px] font-bold text-gray-700">별점 평가</span>
-
-        <div class="flex items-center gap-1 text-2xl" id="review-stars">
-          <i
-            class="fa-solid fa-star text-yellow-400 cursor-pointer"
-            onclick="setRating(1)"
-          ></i>
-          <i
-            class="fa-solid fa-star text-yellow-400 cursor-pointer"
-            onclick="setRating(2)"
-          ></i>
-          <i
-            class="fa-solid fa-star text-yellow-400 cursor-pointer"
-            onclick="setRating(3)"
-          ></i>
-          <i
-            class="fa-solid fa-star text-yellow-400 cursor-pointer"
-            onclick="setRating(4)"
-          ></i>
-          <i
-            class="fa-regular fa-star text-gray-300 cursor-pointer"
-            onclick="setRating(5)"
-          ></i>
-        </div>
-
-        <span
-          id="rating-text"
-          class="text-[10px] text-gray-500"
-        >
-          4점 - 맛있어요!
-        </span>
-      </div>
-
-      <textarea
-        id="review-input"
-        rows="4"
-        maxlength="80"
-        placeholder="예: 양 많고 따뜻해서 좋았어요."
-        class="w-full resize-none rounded-xl border border-[#F3E7DA] bg-[#FCF8F4] p-3 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-[#f0e1b1]"
-      ></textarea>
-
-      <p id="review-error" class="text-[10px] text-red-500 hidden">
-        리뷰 내용을 입력해주세요.
-      </p>
     </div>
-
-    <div
-      class="bg-[#FCF8F4] border-t border-[#F3E7DA] px-4 py-3 flex gap-2"
-    >
-      <button
-        onclick="closeReviewModal()"
-        class="flex-1 bg-[#FFFDFC] hover:bg-[#F3E7DA] text-gray-600 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
-      >
-        취소
-      </button>
-
-      <button
-        onclick="submitReview()"
-        class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"
-      >
-        등록
-      </button>
-    </div>
-  </div>
-</div>
+    <!-- 모바일 컨테이너 끝 -->
 
     <script>
       // ================= APPLICATION DATA =================
@@ -935,10 +904,6 @@
           .forEach((s) => s.classList.add('hidden'));
 
         // 모든 탭 스타일 초기화
-        document.querySelectorAll('.nav-btn').forEach((btn) => {
-          btn.classList.remove('tab-active');
-          btn.classList.add('text-gray-400');
-        });
 
         // 지정 스크린 활성화
         const activeScreen = document.getElementById(`screen-${tabId}`);
@@ -978,6 +943,15 @@
         });
 
         const activeBtn = document.getElementById(`home-btn-${name}`);
+        document.querySelectorAll('.cafeteria-btn').forEach((btn) => {
+          btn.classList.remove('bg-[#f0e1b1]');
+          btn.classList.add('bg-[#FFFDFC]');
+        });
+
+        if (activeBtn) {
+          activeBtn.classList.remove('bg-[#FFFDFC]');
+          activeBtn.classList.add('bg-[#f0e1b1]');
+        }
         if (activeBtn) {
           activeBtn.classList.remove('border-[#F3E7DA]', 'border');
           activeBtn.classList.add('border-[#f0e1b1]', 'border-2');
@@ -992,7 +966,10 @@
           K_CAFE_DATA[name].waitTime;
         const seatStatus = document.getElementById('seat-status');
         seatStatus.innerText =
-          K_CAFE_DATA[name].seatStatus + ' ' + K_CAFE_DATA[name].seatCount + '석';
+          K_CAFE_DATA[name].seatStatus +
+          ' ' +
+          K_CAFE_DATA[name].seatCount +
+          '석';
         seatStatus.className =
           'text-xs font-bold ' + K_CAFE_DATA[name].seatColor;
       }
@@ -1029,7 +1006,9 @@
           filteredList = filteredList.filter((item) => item.stock > 0);
         }
 
-        const soldOutCount = filteredList.filter((item) => item.stock === 0).length;
+        const soldOutCount = filteredList.filter(
+          (item) => item.stock === 0,
+        ).length;
         const lowStockCount = filteredList.filter(
           (item) => item.stock > 0 && item.stock <= 5,
         ).length;
@@ -1268,9 +1247,12 @@
                 </div>
 
                 <!-- 하단 액션 바 -->
-               <div class="pt-4">
-               ${actionBtnHTML}
-              </div>
+                <div class="flex gap-2.5 pt-4">
+                    <button onclick="bookmarkItem()" class="w-12 h-12 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl flex items-center justify-center text-gray-500 hover:text-red-500 transition">
+                        <i class="fa-regular fa-heart text-lg"></i>
+                    </button>
+                    ${actionBtnHTML}
+                </div>
             `;
 
         changeTab('detail');
@@ -1441,7 +1423,10 @@
                         ${
                           !isClaimed
                             ? `
-                            <div class="relative w-44 h-44 bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-center overflow-hidden">
+                            <div
+  onclick="scanQR(${idx})"
+  class="relative w-44 h-44 bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-center overflow-hidden cursor-pointer"
+>
                                 ${scanGuideHTML}
                                 <svg class="w-full h-full" viewBox="0 0 100 100">
                                     <path d="M5,5 h30 v30 h-30 z M15,15 h10 v10 h-10 z" fill="#0f172a"/>
@@ -1486,9 +1471,7 @@
                                 <button onclick="simulateProcess(${idx})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[11px] font-bold py-2 rounded-lg border border-[#F3E7DA] transition">
                                     <i class="fa-solid fa-wand-magic-sparkles"></i> 조리 변경
                                 </button>
-                                <button onclick="claimMeal(${idx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2 rounded-lg transition">
-                                    <i class="fa-solid fa-utensils"></i> 수령 완료
-                                </button>
+                              
                                 <button onclick="cancelTicket(${idx})" class="text-gray-400 hover:text-red-500 text-[11px] font-bold px-2 py-2 border border-[#F3E7DA] bg-[#FFFDFC] rounded-lg transition">
                                     환불신청
                                 </button>
@@ -1539,6 +1522,23 @@
         );
         renderTickets();
         updateWidgets();
+      }
+
+      function scanQR(idx) {
+        USER_TICKETS[idx].status = 'claimed';
+
+        renderTickets();
+        updateWidgets();
+
+        setTimeout(() => {
+          changeTab('home');
+        }, 500);
+
+        showModal(
+          '식사 전달 완료',
+          'QR 스캔이 완료되어 자동으로 수령 처리되었습니다.',
+          'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
+        );
       }
 
       // 환불/취소 처리
@@ -1620,10 +1620,10 @@
       }
 
       function openNotification() {
-      showModal(
-    '📢 학식 운영 시간 안내',
-    '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.<br><br>⚖️ 법학관 : 10:30 ~ 18:30<br>🏢 복지관 : 조/중식 08:00 ~ 15:00<br>🌙 석식 17:00 ~ 18:30',
-    'fa-solid fa-bullhorn text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]'
+        showModal(
+          '📢 학식 운영 시간 안내',
+          '법학관 및 복지관 학생식당은 현재 정상 운영 시간대입니다.<br><br>⚖️ 법학관 : 10:30 ~ 18:30<br>🏢 복지관 : 조/중식 08:00 ~ 15:00<br>🌙 석식 17:00 ~ 18:30',
+          'fa-solid fa-bullhorn text-[#d9b455] bg-[#FCF8F4] border border-[#F3E7DA]',
         );
       }
 
@@ -1671,34 +1671,6 @@
           'fa-solid fa-circle-check text-emerald-600 bg-emerald-50',
         );
       }
-      let REVIEW_RATING = 4;
-
-function setRating(rating) {
-  REVIEW_RATING = rating;
-
-  const stars = document.querySelectorAll('#review-stars i');
-
-  stars.forEach((star, index) => {
-    if (index < rating) {
-      star.className =
-        'fa-solid fa-star text-yellow-400 cursor-pointer';
-    } else {
-      star.className =
-        'fa-regular fa-star text-gray-300 cursor-pointer';
-    }
-  });
-
-  const texts = {
-    1: '1점 - 별로예요',
-    2: '2점 - 아쉬워요',
-    3: '3점 - 무난해요',
-    4: '4점 - 맛있어요!',
-    5: '5점 - 최고예요!'
-  };
-
-  document.getElementById('rating-text').innerText =
-    texts[rating];
-}
     </script>
   </body>
 </html>
