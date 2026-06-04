@@ -449,6 +449,8 @@
           image: '학식2.jpg',
           stock: 3,
           maxStock: 80,
+          pickupBooth: '법학관1번픽업부스',
+          lineGuide: '법학관 입구 오른쪽 모바일 주문 전용줄',
           tags: ['강력추천', '고기류', '가성비'],
           description: '국민대학교 법학관 부동의 인기 1위 메뉴!',
           nutrients: { kcal: '785 kcal', protein: '34g', sodium: '850mg' },
@@ -468,7 +470,7 @@
           rating: 4.5,
           reviewsCount: 89,
           image: '학식1.jpg',
-          stock: 0,
+          stock: 25,
           maxStock: 100,
           tags: ['한식', '가성비', '든든한'],
           description: '부드럽고 진한 카레 소스에 다양한 재료를 더해 맛과 영양을 모두 담은 메뉴입니다.',
@@ -489,6 +491,8 @@
           image: '학식3.jpg',
           stock: 12,
           maxStock: 60,
+          pickupBooth: '법학관2번픽업부스',
+          lineGuide: '법학관 입구 오른쪽 모바일 주문 전용줄',
           tags: ['한식', '가성비', '든든한'],
           description: '진한 짜장 소스와 고소한 풍미가 어우러진 든든한 한 끼 식사입니다.',
           nutrients: { kcal: '580 kcal', protein: '22g', sodium: '710mg' },
@@ -873,8 +877,8 @@
           menuId: ACTIVE_ORDER_ITEM.id,
           menuName: ACTIVE_ORDER_ITEM.name,
           cafeteria: ACTIVE_ORDER_ITEM.cafeteria,
-          pickupBooth: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth,
-          lineGuide: K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].lineGuide,
+          pickupBooth: ACTIVE_ORDER_ITEM.pickupBooth || K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth,
+          lineGuide: ACTIVE_ORDER_ITEM.lineGuide || K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].lineGuide,
           price: ACTIVE_ORDER_ITEM.price,
           image: ACTIVE_ORDER_ITEM.image,
           pickupCode: pickupCode,
@@ -885,7 +889,7 @@
 
         USER_TICKETS.unshift(newTicket);
         updateWidgets();
-        showModal('결제 및 식권 생성 완료', `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth}로 이동하세요.`, 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
+        showModal('결제 및 식권 생성 완료', `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${ACTIVE_ORDER_ITEM.pickupBooth || K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth}로 이동하세요.`, 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
         setTimeout(() => { changeTab('tickets'); }, 300);
       }
 
