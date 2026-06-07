@@ -103,7 +103,7 @@
                 <span class="text-xs font-bold text-gray-800" id="wait-time">약 5분 ~ 8분</span>
               </div>
               <div class="border-l border-[#F3E7DA]">
-                <span class="text-[10px] text-gray-500 block">예상 잔여 좌석</span>
+                <span class="text-[10px] text-gray-500 block">잔여 좌석 (추정치)</span>
                 <span class="text-xs font-bold text-emerald-600" id="seat-status">여유 42석</span>
               </div>
             </div>
@@ -286,18 +286,18 @@
             <div class="space-y-2.5">
               <h3 class="text-xs font-bold text-gray-855">결제 수단</h3>
               <div class="space-y-2">
-                <label class="flex items-center justify-between p-3.5 border-2 border-[#f0e1b1] bg-[#FFFDFC] rounded-xl cursor-pointer shadow-sm">
+                <label onclick="selectPayment(this)" class="pay-method flex items-center justify-between p-3.5 border-2 border-[#f0e1b1] bg-[#FFFDFC] rounded-xl cursor-pointer shadow-sm transition">
                   <div class="flex items-center gap-2.5">
                     <div class="w-5 h-5 rounded-full bg-[#f0e1b1] text-gray-800 flex items-center justify-center text-[10px] font-bold border border-[#F3E7DA]">K</div>
                     <span class="text-xs font-bold text-gray-850">국민대 K-Pay <span class="text-[10px] text-gray-500 font-normal">(학번 계좌 등록 완료)</span></span>
                   </div>
                   <input type="radio" name="payment-method" checked class="text-gray-400" />
                 </label>
-                <label class="flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer">
+                <label onclick="selectPayment(this)" class="pay-method flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer transition">
                   <span class="text-xs font-bold text-yellow-600">카카오페이</span>
                   <input type="radio" name="payment-method" class="text-gray-400" />
                 </label>
-                <label class="flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer">
+                <label onclick="selectPayment(this)" class="pay-method flex items-center justify-between p-3.5 border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl cursor-pointer transition">
                   <span class="text-xs font-bold text-blue-600">토스페이</span>
                   <input type="radio" name="payment-method" class="text-gray-400" />
                 </label>
@@ -373,6 +373,8 @@
             <p id="modal-message" class="text-xs text-gray-500 leading-relaxed">알림 메시지 본문입니다.</p>
           </div>
           <div class="bg-[#FCF8F4] border-t border-[#F3E7DA] px-4 py-3 flex gap-2">
+            <button id="modal-action-btn" onclick="runModalAction()"
+              class="hidden flex-1 bg-[#FFFDFC] hover:bg-[#F3E7DA] text-gray-700 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition"></button>
             <button onclick="closeModal()"
               class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-xs font-bold py-2.5 rounded-lg text-center border border-[#F3E7DA] transition">확인</button>
           </div>
@@ -454,6 +456,7 @@
           tags: ['강력추천', '고기류', '가성비'],
           description: '국민대학교 법학관 부동의 인기 1위 메뉴!',
           nutrients: { kcal: '785 kcal', protein: '34g', sodium: '850mg' },
+          allergens: ['닭고기'],
           reviews: [
             { id: 101, author: '멋쟁이', rating: 3, text: '닭크기가 작았슴 국물은 진해서 맛있었슴', date: '2026-06-04T11:30:00.000Z' },
             { id: 102, author: '당근먹는판다', rating: 5, text: '가성비굳.', date: '2026-06-03T12:10:00.000Z' },
@@ -475,6 +478,7 @@
           tags: ['한식', '가성비', '든든한'],
           description: '부드럽고 진한 카레 소스에 다양한 재료를 더해 맛과 영양을 모두 담은 메뉴입니다.',
           nutrients: { kcal: '650 kcal', protein: '28g', sodium: '1,200mg' },
+          allergens: ['밀', '대두', '우유', '쇠고기'],
           reviews: [
             { id: 201, author: '판다', rating: 5, text: '간이 딱 좋아서 만족.', date: '2026-06-04T14:15:00.000Z' },
             { id: 202, author: '당근', rating: 4, text: '무난', date: '2026-06-03T11:05:00.000Z' },
@@ -496,6 +500,7 @@
           tags: ['한식', '가성비', '든든한'],
           description: '진한 짜장 소스와 고소한 풍미가 어우러진 든든한 한 끼 식사입니다.',
           nutrients: { kcal: '580 kcal', protein: '22g', sodium: '710mg' },
+          allergens: ['밀', '대두', '돼지고기'],
           reviews: [
             { id: 401, author: '면쟁이', rating: 5, text: '적당히 걸쭉하고 간도 딱 좋아서 만족.', date: '2026-06-04T12:20:00.000Z' },
             { id: 402, author: '당근', rating: 4, text: '무난하게 맛있는 맛!', date: '2026-06-02T13:10:00.000Z' },
@@ -515,6 +520,7 @@
           tags: ['달콤', '핫트렌드', '양식'],
           description: '탱글한 면발과 풍부한 토마토 소스가 어우러진 누구나 즐기기 좋은 스파게티입니다.',
           nutrients: { kcal: '720 kcal', protein: '18g', sodium: '1,450mg' },
+          allergens: ['밀', '토마토', '쇠고기'],
           reviews: [
             { id: 501, author: '멋쟁이', rating: 5, text: '면이 쫄깃하고 소스가 진해서 정말 맛있게 먹었어요.', date: '2026-06-04T15:55:00.000Z' },
             { id: 502, author: '사자', rating: 4, text: '소스가 넉넉하게 들어 있어 면과 함께 먹기 좋았어요.', date: '2026-06-03T11:45:00.000Z' },
@@ -737,6 +743,18 @@
               <div class="bg-[#FCF8F4] p-2 rounded-lg border border-[#F3E7DA]"><span class="text-[9px] text-gray-400 block">나트륨</span><span class="font-bold text-gray-800">${item.nutrients.sodium}</span></div>
             </div>
           </div>
+          <div class="border border-[#F3E7DA] bg-[#FFFDFC] rounded-xl p-3.5">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-wheat-awn-circle-exclamation text-gray-655"></i> 알레르기 유발 가능 재료</span>
+              <span class="text-[9px] text-amber-600 font-bold bg-amber-50 border border-amber-100 px-1.5 py-0.5 rounded">예시 정보</span>
+            </div>
+            <div class="flex gap-1.5 flex-wrap">
+              ${item.allergens && item.allergens.length
+                ? item.allergens.map((a) => `<span class="bg-[#FCF8F4] text-gray-700 text-[10px] px-2 py-1 rounded-md border border-[#F3E7DA]">${a}</span>`).join('')
+                : `<span class="text-[10px] text-gray-400">등록된 알레르기 정보가 없습니다.</span>`}
+            </div>
+            <p class="text-[9px] text-gray-400 mt-2 leading-relaxed">※ 조리 환경에서 교차 오염이 발생할 수 있으며, 위 정보는 데모용 예시입니다. 정확한 정보는 식당에 문의하세요.</p>
+          </div>
           <div class="space-y-2">
             <div class="flex justify-between items-center">
               <h3 class="text-xs font-bold text-gray-855" id="detail-review-title">구매 학생 한줄 평 (${item.reviews.length})</h3>
@@ -745,7 +763,7 @@
                   <i class="fa-solid fa-star text-yellow-500 text-xs"></i>
                   <span class="text-xs font-bold text-gray-855" id="detail-average-rating">${item.rating}</span>
                 </div>
-                <button onclick="writeReviewWithRating(${item.id})" class="bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[10px] font-bold px-2 py-1 rounded-md border border-[#F3E7DA] transition">후기 작성</button>
+                <span class="text-[9px] text-gray-400 font-medium flex items-center gap-1"><i class="fa-solid fa-lock"></i> QR 수령 후 작성 가능</span>
               </div>
             </div>
             <div class="flex items-center gap-1 bg-[#F3E7DA]/50 p-1 rounded-lg">
@@ -865,6 +883,18 @@
         changeTab('payment');
       }
 
+      // 결제 수단 선택 시 선택된 항목만 강조(테두리/그림자) 표시
+      function selectPayment(label) {
+        document.querySelectorAll('.pay-method').forEach((el) => {
+          el.classList.remove('border-2', 'border-[#f0e1b1]', 'shadow-sm');
+          el.classList.add('border', 'border-[#F3E7DA]');
+        });
+        label.classList.remove('border', 'border-[#F3E7DA]');
+        label.classList.add('border-2', 'border-[#f0e1b1]', 'shadow-sm');
+        const radio = label.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      }
+
       function processPayment() {
         if (!ACTIVE_ORDER_ITEM) return;
         if (ACTIVE_ORDER_ITEM.stock > 0) ACTIVE_ORDER_ITEM.stock -= 1;
@@ -889,6 +919,7 @@
 
         USER_TICKETS.unshift(newTicket);
         updateWidgets();
+        scheduleCooking(newTicket.ticketId);
         showModal('결제 및 식권 생성 완료', `성공적으로 식권이 발행되었습니다!\n주방으로 주문 정보가 접수되었으니, 모바일 QR 식권을 소지 후 ${ACTIVE_ORDER_ITEM.pickupBooth || K_CAFE_DATA[ACTIVE_ORDER_ITEM.cafeteria].pickupBooth}로 이동하세요.`, 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
         setTimeout(() => { changeTab('tickets'); }, 300);
       }
@@ -973,9 +1004,7 @@
               `}
               <div class="w-full pt-3 border-t border-[#F3E7DA] flex gap-2">
                 ${!isClaimed ? `
-                  <button onclick="simulateProcess(${idx})" class="flex-1 bg-[#f0e1b1] hover:bg-[#e3d196] text-gray-800 text-[11px] font-bold py-2 rounded-lg border border-[#F3E7DA] transition">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> 조리 변경
-                  </button>
+                  ${cookingTrackerHTML(ticket.status)}
                   <button onclick="cancelTicket(${idx})" class="text-gray-400 hover:text-red-500 text-[11px] font-bold px-2 py-2 border border-[#F3E7DA] bg-[#FFFDFC] rounded-lg transition">환불신청</button>
                 ` : `
                   <button onclick="writeReviewWithRating(${ticket.menuId})" class="w-full bg-[#FCF8F4] border border-[#F3E7DA] text-gray-700 hover:bg-[#F3E7DA] text-[11px] font-bold py-2 rounded-lg transition">
@@ -988,26 +1017,52 @@
         });
       }
 
-      function simulateProcess(idx) {
-        const ticket = USER_TICKETS[idx];
-        if (ticket.status === 'ready') {
-          ticket.status = 'preparing';
-          showModal('학식 조리 개시', '주방에서 음식을 만들기 시작했습니다. 따뜻하게 준비 중입니다.', 'fa-solid fa-fire text-yellow-655 bg-yellow-50');
-        } else if (ticket.status === 'preparing') {
-          ticket.status = 'complete';
-          showModal('학식 조리 완료!', '조리가 완료되었습니다! 픽업대로 오셔서 모바일 QR 식권을 바로 스캔하고 식기를 받아 가세요.', 'fa-solid fa-bell text-emerald-600 bg-emerald-50');
-        } else if (ticket.status === 'complete') {
-          ticket.status = 'ready';
-        }
+      // 조리 단계 순서 (백엔드가 없어 데모용 타이머로 주방 진행을 시뮬레이션 → 사용자에게 자동 통보)
+      const COOKING_ORDER = { ready: 0, preparing: 1, complete: 2, claimed: 3 };
+
+      function scheduleCooking(ticketId) {
+        setTimeout(() => advanceCooking(ticketId, 'preparing'), 4000);
+        setTimeout(() => advanceCooking(ticketId, 'complete'), 9000);
+      }
+
+      function advanceCooking(ticketId, toStatus) {
+        const t = USER_TICKETS.find((x) => x.ticketId === ticketId);
+        if (!t) return; // 환불/삭제된 식권
+        if (COOKING_ORDER[toStatus] <= COOKING_ORDER[t.status]) return; // 이미 진행된 단계
+        t.status = toStatus;
         renderTickets();
+        updateWidgets();
+        if (toStatus === 'complete') {
+          showModal('조리 완료 알림', `[${t.menuName}] 조리가 완료되었습니다! ${t.pickupBooth}에서 QR을 스캔하고 수령하세요.`, 'fa-solid fa-bell text-emerald-600 bg-emerald-50');
+        }
+      }
+
+      // 식권 카드 안에 현재 조리 상황(접수 → 조리중 → 완료) 단계를 보여주는 칸
+      function cookingTrackerHTML(status) {
+        const steps = [
+          { key: 'ready', label: '접수' },
+          { key: 'preparing', label: '조리중' },
+          { key: 'complete', label: '완료' },
+        ];
+        const cur = COOKING_ORDER[status];
+        const inner = steps.map((s, i) => {
+          let cls, icon;
+          if (i < cur) { cls = 'text-emerald-600'; icon = '<i class="fa-solid fa-check"></i> '; }
+          else if (i === cur) {
+            if (s.key === 'complete') { cls = 'text-emerald-600 font-extrabold'; icon = '<i class="fa-solid fa-bell"></i> '; }
+            else { cls = 'text-[#d9b455] font-extrabold'; icon = '<i class="fa-solid fa-spinner fa-spin"></i> '; }
+          } else { cls = 'text-gray-300'; icon = ''; }
+          return `<span class="${cls}">${icon}${s.label}</span>`;
+        }).join('<i class="fa-solid fa-angle-right text-gray-300 text-[8px]"></i>');
+        return `<div class="flex-1 bg-[#FCF8F4] border border-[#F3E7DA] rounded-lg px-2.5 py-2 flex items-center justify-center gap-1.5 text-[10px] font-semibold">${inner}</div>`;
       }
 
       function scanQR(idx) {
+        const menuId = USER_TICKETS[idx].menuId;
         USER_TICKETS[idx].status = 'claimed';
         renderTickets();
         updateWidgets();
-        setTimeout(() => { changeTab('home'); }, 500);
-        showModal('식사 전달 완료', 'QR 스캔이 완료되어 자동으로 수령 처리되었습니다.', 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50');
+        showModal('식사 수령 완료', 'QR 스캔이 완료되어 자동으로 수령 처리되었습니다. 맛있게 드시고 후기를 남겨주세요!', 'fa-solid fa-circle-check text-emerald-600 bg-emerald-50', { label: '🌟 후기 쓰기', onClick: () => writeReviewWithRating(menuId) });
       }
 
       function cancelTicket(idx) {
@@ -1034,7 +1089,9 @@
         if (pCount) pCount.innerText = `보유 식권 ${USER_TICKETS.length}장`;
       }
 
-      function showModal(title, message, iconClassAndBg) {
+      let MODAL_ACTION = null;
+
+      function showModal(title, message, iconClassAndBg, action) {
         document.getElementById('modal-title').innerText = title;
         document.getElementById('modal-message').innerHTML = message;
         const mIcon = document.getElementById('modal-icon');
@@ -1044,8 +1101,26 @@
         else if (iconClassAndBg.includes('heart')) mIcon.innerHTML = `<i class="fa-solid fa-heart"></i>`;
         else if (iconClassAndBg.includes('bullhorn')) mIcon.innerHTML = `<i class="fa-solid fa-bullhorn"></i>`;
         else if (iconClassAndBg.includes('arrow-rotate-left')) mIcon.innerHTML = `<i class="fa-solid fa-arrow-rotate-left"></i>`;
+        else if (iconClassAndBg.includes('bell')) mIcon.innerHTML = `<i class="fa-solid fa-bell"></i>`;
         else mIcon.innerHTML = `<i class="fa-solid fa-info-circle"></i>`;
+
+        // 선택적 액션 버튼 (예: 수령 완료 알림의 "후기 쓰기")
+        const actionBtn = document.getElementById('modal-action-btn');
+        if (action) {
+          MODAL_ACTION = action.onClick;
+          actionBtn.innerText = action.label;
+          actionBtn.classList.remove('hidden');
+        } else {
+          MODAL_ACTION = null;
+          actionBtn.classList.add('hidden');
+        }
         document.getElementById('app-modal').classList.remove('hidden');
+      }
+
+      function runModalAction() {
+        const fn = MODAL_ACTION;
+        closeModal();
+        if (fn) fn();
       }
 
       function closeModal() { document.getElementById('app-modal').classList.add('hidden'); }
